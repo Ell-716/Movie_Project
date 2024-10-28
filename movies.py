@@ -13,7 +13,13 @@ movies = storage.list_movies()
 
 
 def is_movie_list_empty(movies):
-    """Checks if the movie list is empty and prints a message."""
+    """
+    Checks if the movie list is empty and prints a message.
+    Args:
+        movies (dict): A dictionary containing movie titles and their details.
+    Returns:
+        bool: True if the movie list is empty, False otherwise.
+    """
     if len(movies) == 0:
         print(Fore.RED + "There are no movies available.")
         return True
@@ -21,7 +27,13 @@ def is_movie_list_empty(movies):
 
 
 def get_valid_movie_name():
-    """Prompts the user for a valid movie name."""
+    """
+    Prompts the user for a valid movie name.
+    Returns:
+        str: The movie name entered by the user.
+    Raises:
+        ValueError: If the input is empty.
+    """
     while True:
         movie_name = input("Enter movie name: ").strip()
         if movie_name == "":
@@ -30,7 +42,13 @@ def get_valid_movie_name():
 
 
 def get_valid_rating():
-    """Prompts the user for a valid rating between 0 and 10."""
+    """
+    Prompts the user for a valid rating between 0 and 10.
+    Returns:
+        float: The rating entered by the user.
+    Raises:
+        ValueError: If the input is not a number or not in the valid range.
+    """
     while True:
         try:
             rating = float(input("Enter new movie rating (0-10): "))
@@ -46,11 +64,11 @@ def movies_and_rating(movies):
     """
     Displays the total number of movies and a list of each movie
     with its year and rating.
-    If no movies are available, it informs the user that there are
-    no movies to display.
     Args:
-    movies (dict): A dictionary containing movie titles as keys,
-    and a dictionary with 'rating' and 'year' as values.
+        movies (dict): A dictionary containing movie titles as keys,
+                       and a dictionary with 'rating' and 'year' as values.
+    Returns:
+        None
     """
     if is_movie_list_empty(movies):
         return
@@ -63,8 +81,10 @@ def movies_and_rating(movies):
 def adding_new_movie(movies):
     """
     Adds a new movie to the movies dictionary with its year and rating.
-    The user is prompted to input the movie's name, year, and rating.
-    If the movie already exists, a message is displayed.
+    Args:
+        movies (dict): A dictionary containing movie titles and their details.
+    Returns:
+        None
     """
     movie_name = get_valid_movie_name()
     if movie_name.lower() in [name.lower() for name in movies]:
@@ -88,10 +108,10 @@ def adding_new_movie(movies):
 def removing_movie(movies):
     """
     Removes a movie from the movies dictionary if it exists.
-    The user is prompted to input the movie's name.
-    The function checks for empty input and whether the movie exists in the dictionary.
-    If the movie is found, it is deleted, and a confirmation message is shown.
-    If the movie is not found or if no movies exist, an appropriate message is displayed.
+    Args:
+        movies (dict): A dictionary containing movie titles and their details.
+    Returns:
+        None
     """
     if is_movie_list_empty(movies):
         return
@@ -111,10 +131,11 @@ def removing_movie(movies):
 
 def update_rating(movies):
     """
-    Updates the rating of an existing movie in the movies' dictionary.
-    The user is prompted to input the movie's name and the new rating. If the movie
-    exists in the dictionary, the rating is updated and a confirmation message is shown.
-    If the movie is not found, an error message is displayed.
+    Updates the rating of an existing movie in the movies dictionary.
+    Args:
+        movies (dict): A dictionary containing movie titles and their details.
+    Returns:
+        None
     """
     if is_movie_list_empty(movies):
         return
@@ -141,6 +162,10 @@ def movie_statistics(movies):
     - The median rating of all movies.
     - The best movies (with the highest rating).
     - The worst movies (with the lowest rating).
+    Args:
+        movies (dict): A dictionary containing movie titles and their details.
+    Returns:
+        None
     """
     if is_movie_list_empty(movies):
         return
@@ -166,7 +191,10 @@ def movie_statistics(movies):
 def random_movie_rating(movies):
     """
     Selects and displays a random movie from the movies dictionary along with its rating.
-    This function randomly picks a movie from the dictionary and prints its title and rating.
+    Args:
+        movies (dict): A dictionary containing movie titles and their details.
+    Returns:
+        None
     """
     if is_movie_list_empty(movies):
         return
@@ -178,7 +206,10 @@ def random_movie_rating(movies):
 def search_movie(movies):
     """
     Searches for movies based on a partial name input using fuzzy string matching.
-    If no exact match is found, suggests similar movie titles.
+    Args:
+        movies (dict): A dictionary containing movie titles and their details.
+    Returns:
+        None
     """
     if is_movie_list_empty(movies):
         return
@@ -204,8 +235,10 @@ def search_movie(movies):
 def sorted_by_rating(movies):
     """
     Prints the movies sorted by their ratings in descending order.
-    The function sorts the movies dictionary by ratings, with the highest rating first,
-    and prints each movie title along with its rating.
+    Args:
+        movies (dict): A dictionary containing movie titles and their details.
+    Returns:
+        None
     """
     if is_movie_list_empty(movies):
         return
@@ -218,10 +251,10 @@ def sorted_by_rating(movies):
 def sorted_by_year(movies):
     """
     Sorts and displays movies in chronological order based on their release year.
-    The user is asked if they want the latest movies first or last, and the function
-    sorts the movies accordingly and displays them with their year and rating.
     Args:
-    movies (dict): A dictionary of movie titles and their associated information (year and rating).
+        movies (dict): A dictionary containing movie titles and their details.
+    Returns:
+        None
     """
 
     if is_movie_list_empty(movies):
@@ -256,8 +289,10 @@ def sorted_by_year(movies):
 def filter_movies(movies):
     """
     Filters movies based on the user's input for minimum rating, start year, and end year.
-    The user can leave inputs blank to apply no filter for a particular criterion.
-    The filtered list of movies is displayed with their titles, release years, and ratings.
+    Args:
+        movies (dict): A dictionary containing movie titles and their details.
+    Returns:
+        None
     """
 
     if is_movie_list_empty(movies):
@@ -331,68 +366,63 @@ def filter_movies(movies):
 def main():
     """
     Main function to run the Movies Database application.
-    Displays a menu to the user and handles user input to perform different operations
+
+    This function displays a menu to the user and handles user input to perform various operations,
     such as listing movies, adding/deleting movies, updating ratings, displaying statistics,
     selecting a random movie, searching for a movie, and sorting movies by rating.
     The program runs in a loop until the user chooses to exit.
+    Args:
+        None
+    Returns:
+        None
+    Raises:
+        ValueError: If the user input is not a valid integer choice from the menu.
     """
     print(Fore.CYAN + "********** My Movies Database **********")
+
     while True:
         try:
-            print(Fore.GREEN + MENU)
-            choice = int(input(Fore.YELLOW + "Enter choice (0-9): "))
+            # Display the menu
+            print("\nMenu:")
+            for key, (description, _) in MENU_OPTIONS.items():
+                print(f"{key}. {description}")
+
+            choice = int(input(Fore.YELLOW + "\nEnter choice (0-10): "))
             print()
 
             # Reload movies to ensure the latest data is used
             movies = storage.list_movies()
 
             # Handle the user's menu choice
-            if choice == 1:
-                movies_and_rating(movies)
-            elif choice == 2:
-                adding_new_movie(movies)
-            elif choice == 3:
-                removing_movie(movies)
-            elif choice == 4:
-                update_rating(movies)
-            elif choice == 5:
-                movie_statistics(movies)
-            elif choice == 6:
-                random_movie_rating(movies)
-            elif choice == 7:
-                search_movie(movies)
-            elif choice == 8:
-                sorted_by_rating(movies)
-            elif choice == 9:
-                sorted_by_year(movies)
-            elif choice == 10:
-                filter_movies(movies)
-            elif choice == 0:
-                print("Bye!")
-                break  # Exit the program
-            elif choice < 0 or choice > 9:
-                print(Fore.RED + "Invalid choice. Please enter a number between 0 and 9.")
+            if choice in MENU_OPTIONS:
+                function = MENU_OPTIONS[choice][1]
+                if function is not None:
+                    function(movies)
+                else:
+                    print("Bye!")
+                    break  # Exit the program
+            else:
+                print(Fore.RED + "Invalid choice. Please enter a number between 0 and 10.")
         except ValueError:
-            print(Fore.RED + "Invalid choice. Please enter a number between 0 and 9.")
+            print(Fore.RED + "Invalid choice. Please enter a number between 0 and 10.")
         print()
         input(Fore.BLUE + "Press enter to continue")
 
 
-# The menu options to be displayed to the user
-MENU = """
-Menu:
-0. Exit
-1. List movies
-2. Add movie
-3. Delete movie
-4. Update movie
-5. Stats
-6. Random movie
-7. Search movie
-8. Movies sorted by rating
-9. Movies sorted by year
-10. Filter movies
-"""
+# Define the menu options and corresponding functions
+MENU_OPTIONS = {
+    0: ("Exit", None),
+    1: ("List movies", movies_and_rating),
+    2: ("Add movie", adding_new_movie),
+    3: ("Delete movie", removing_movie),
+    4: ("Update movie", update_rating),
+    5: ("Stats", movie_statistics),
+    6: ("Random movie", random_movie_rating),
+    7: ("Search movie", search_movie),
+    8: ("Movies sorted by rating", sorted_by_rating),
+    9: ("Movies sorted by year", sorted_by_year),
+    10: ("Filter movies", filter_movies),
+}
 
 
 if __name__ == "__main__":
