@@ -11,7 +11,7 @@ class StorageJson(IStorage):
         Args:
             file_path (str): The path to the JSON file where movie data is stored.
         """
-        self.file_path = file_path
+        self._file_path = file_path
 
     def list_movies(self):
         """
@@ -21,7 +21,7 @@ class StorageJson(IStorage):
                   or an empty dictionary if an error occurs.
         """
         try:
-            with open(self.file_path, "r") as file:
+            with open(self._file_path, "r") as file:
                 data = json.load(file)
                 if isinstance(data, dict):
                     return data
@@ -45,22 +45,21 @@ class StorageJson(IStorage):
             movies (dict): A dictionary containing movie titles and their details.
         """
         try:
-            with open(self.file_path, "w") as file:
+            with open(self._file_path, "w") as file:
                 json.dump(movies, file)
         except Exception as e:
             print(f"An error occurred while saving the movies: {e}")
 
-    def add_movie(self, title, year, rating, poster):
+    def add_movie(self, title, year, rating):
         """
         Add a new movie to the JSON file.
         Args:
             title (str): The title of the movie.
             year (int): The release year of the movie.
             rating (float): The rating of the movie.
-            poster (str): The URL or path of the movie's poster.
         """
         movies = self.list_movies()
-        movies[title] = {"year": year, "rating": rating, "poster": poster}
+        movies[title] = {"year": year, "rating": rating}
         self.save_movies(movies)
 
     def delete_movie(self, title):

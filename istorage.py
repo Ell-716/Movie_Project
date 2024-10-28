@@ -12,14 +12,13 @@ class IStorage(ABC):
         pass
 
     @abstractmethod
-    def add_movie(self, title, year, rating, poster):
+    def add_movie(self, title, year, rating):
         """
         Adds a new movie to the storage.
         Args:
             title (str): The title of the movie to be added.
             year (int): The release year of the movie.
             rating (float): The rating of the movie (0-10).
-            poster (str): The URL or path to the movie's poster image.
         """
         pass
 
