@@ -390,7 +390,7 @@ class MovieApp:
         Raises:
             ValueError: If the user input is not a valid integer choice from the menu.
         """
-        print(Fore.CYAN + "********** My Movies Database **********")
+        print(Fore.CYAN + "\n********** My Movies Database **********")
 
         while True:
             try:
