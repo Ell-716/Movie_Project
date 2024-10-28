@@ -1,4 +1,4 @@
-import movie_storage
+from storage_json import StorageJson
 import statistics
 import random
 from colorama import init, Fore
@@ -8,7 +8,8 @@ from fuzzywuzzy import process
 init(autoreset=True)  # Initialize colorama
 
 # Load movies from the JSON file
-movies = movie_storage.get_movies()
+storage = StorageJson('data.json')
+movies = storage.list_movies()
 
 
 def is_movie_list_empty(movies):
@@ -79,7 +80,8 @@ def adding_new_movie(movies):
             print(Fore.RED + "Please enter a valid year.")
 
     rating = get_valid_rating()
-    movie_storage.add_movie(movie_name, year, rating)
+    poster = None
+    storage.add_movie(movie_name, year, rating, poster)
     print(Fore.GREEN + f"Movie '{movie_name}' successfully added!")
 
 
@@ -101,7 +103,7 @@ def removing_movie(movies):
 
     if movie_to_delete in normalized_movies:
         original_name = normalized_movies[movie_to_delete]
-        movie_storage.delete_movie(original_name)
+        storage.delete_movie(original_name)
         print(Fore.GREEN + f"Movie '{original_name}' successfully deleted.")
     else:
         print(Fore.RED + f"Movie '{movie_to_delete}' doesn't exist!")
@@ -125,7 +127,7 @@ def update_rating(movies):
     if movie_to_update in normalized_movies:
         original_name = normalized_movies[movie_to_update]  # Get original case name
         rating = get_valid_rating()
-        movie_storage.update_movie(original_name, rating)
+        storage.update_movie(original_name, rating)
         print(Fore.GREEN + f"Movie '{movie_to_update}' successfully updated.")
     else:
         print(Fore.RED + f"Movie '{movie_to_update}' doesn't exist!")
@@ -342,7 +344,7 @@ def main():
             print()
 
             # Reload movies to ensure the latest data is used
-            movies = movie_storage.get_movies()
+            movies = storage.list_movies()
 
             # Handle the user's menu choice
             if choice == 1:
