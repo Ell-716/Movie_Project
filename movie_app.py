@@ -2,7 +2,7 @@ import statistics
 import random
 from colorama import init, Fore
 from fuzzywuzzy import process
-from storage_json import StorageJson
+
 
 
 class MovieApp:
@@ -432,8 +432,3 @@ class MovieApp:
         10: ("Filter movies", _filter_movies),
         11: ("Generate website", _generate_website)
     }
-
-
-storage1 = StorageJson('data.json')
-movie_app = MovieApp(storage1)
-movie_app.run()
