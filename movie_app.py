@@ -1,15 +1,48 @@
 import statistics
+import os
+import requests
+from dotenv import load_dotenv
 import random
 from colorama import init, Fore
 from fuzzywuzzy import process
 
-
+load_doenv()
+API_KEY = os.getenv("API_KEY")
 
 class MovieApp:
     def __init__(self, storage):
         init(autoreset=True)
         self._storage = storage
         self._movies = self._storage.list_movies()
+
+    def _fetch_movie_data(self, title):
+        """Fetch movie details from OMDb API by title."""
+        api_url = f"http://www.omdbapi.com/?apikey={API_KEY}&t={title}"
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
+                          '(KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36',
+            'Accept-Language': 'en-US,en;q=0.5'
+        }
+
+        try:
+            response = requests.get(api_url, headers=headers)
+            response.raise_for_status()  # Raise HTTPError for bad responses (4xx, 5xx)
+
+            data = response.json()
+            if "Error" in data:
+                print(Fore.RED + f"Error fetching movie data: {data['Error']}")
+                return None  # Return None if there's an API error in the data
+
+            return data
+
+        except (HTTPError, ConnectionError, Timeout) as req_err:
+            print(Fore.RED + f"Request error occurred: {req_err}")
+        except ValueError as json_err:
+            print(Fore.RED + f"Error parsing JSON: {json_err}")
+        except RequestException as err:
+            print(Fore.RED + f"An unexpected error occurred: {err}")
+
+        return None  # Explicitly return None if request fails or encounters error
 
     def _is_movie_list_empty(self):
         """
