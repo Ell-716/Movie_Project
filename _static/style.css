@@ -1,0 +1,91 @@
+body {
+  background: #F5F5F0;
+  color: black;
+  font-family: Monaco;
+  background: black;
+}
+
+.list-movies-title {
+  padding: 10px 0;
+  background: orange;
+  color: white;
+  text-align: center;
+  font-size: 18pt;
+  border: 5px solid white;
+}
+
+.list-movies-title h1 {
+  color: white;
+  text-shadow:
+    -1px -1px 0 #888,
+    1px -1px 0 #888,
+    -1px 1px 0 #888,
+    1px 1px 0 #888;
+}
+
+.movie-grid {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.movie-grid li {
+  padding: 10px 15px;
+  text-align: left;
+}
+
+.movie {
+  width: 150px;               /* Adjusted width for the card */
+  padding: 10px;              /* Padding inside the card */
+  border-radius: 8px;         /* Rounded corners for a card-like feel */
+  background-color: #333;     /* Background color of the card */
+  color: white;               /* Text color inside the card */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Soft shadow around the card */
+  display: flex;
+  flex-direction: column;     /* Stack items vertically */
+  align-items: center;        /* Center align items inside the card */
+  margin-bottom: 20px;        /* Space below each card */
+}
+
+.movie-title,
+.movie-year {
+  margin: 5px 0;              /* Consistent spacing between elements */
+  text-align: center;
+}
+
+.movie-rating {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    color: white;
+    font-size: 0.8em;
+    margin-top: 8px;
+}
+
+.movie-rating svg {
+    margin-right: 5px;
+}
+
+.movie-title {
+  margin-top: 10px;
+  color: white;
+  font-size: 1 em;
+}
+
+.movie-year {
+  color: #999;
+  font-size: 0.9em;
+}
+
+.movie-poster {
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    width: 145px;
+    height: 215px;
+    border: 5px solid orange;
+    border-radius: 5px;
+}
