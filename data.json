@@ -1,1 +1,27 @@
-{"The Shawshank Redemption": {"rating": 9.3, "year": 1994}, "Pulp Fiction": {"rating": 8.9, "year": 1994}, "The Matrix": {"rating": 9.0, "year": 1999}, "The Godfather": {"rating": 9.2, "year": 1972}, "Schindler's List": {"rating": 8.9, "year": 1993}, "The Dark Knight": {"rating": 9, "year": 2008}, "In the Name of the Father": {"rating": 8.1, "year": 1993}, "Titanic": {"rating": 9.8, "year": 1997}, "Forrest Gump": {"rating": 8.8, "year": 1994}, "Fight Club": {"rating": 8.8, "year": 1999}}
+{
+    "The Matrix": {
+        "Year": 1999,
+        "Rating": 8.7,
+        "Poster": "https://m.media-amazon.com/images/M/MV5BN2NmN2VhMTQtMDNiOS00NDlhLTliMjgtODE2ZTY0ODQyNDRhXkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    "Fight Club": {
+        "Year": 1999,
+        "Rating": 8.8,
+        "Poster": "https://m.media-amazon.com/images/M/MV5BOTgyOGQ1NDItNGU3Ny00MjU3LTg2YWEtNmEyYjBiMjI1Y2M5XkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    "The Godfather": {
+        "Year": 1972,
+        "Rating": 9.2,
+        "Poster": "https://m.media-amazon.com/images/M/MV5BYTJkNGQyZDgtZDQ0NC00MDM0LWEzZWQtYzUzZDEwMDljZWNjXkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    "Pretty Woman": {
+        "Year": 1990,
+        "Rating": 7.1,
+        "Poster": "https://m.media-amazon.com/images/M/MV5BNjk2ODQzNDYxNV5BMl5BanBnXkFtZTgwMTcyNDg4NjE@._V1_SX300.jpg"
+    },
+    "Home Alone": {
+        "Year": 1990,
+        "Rating": 7.7,
+        "Poster": "https://m.media-amazon.com/images/M/MV5BNzNmNmQ2ZDEtMTc1MS00NjNiLThlMGUtZmQxNTg1Nzg5NWMzXkEyXkFqcGc@._V1_SX300.jpg"
+    }
+}

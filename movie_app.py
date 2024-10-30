@@ -1,22 +1,47 @@
 import statistics
 import os
 import requests
-from dotenv import load_dotenv
 import random
+from dotenv import load_dotenv
+from requests.exceptions import HTTPError, ConnectionError, Timeout, RequestException
 from colorama import init, Fore
 from fuzzywuzzy import process
 
-load_doenv()
+load_dotenv()
 API_KEY = os.getenv("API_KEY")
 
+
 class MovieApp:
+    """
+    The MovieApp class provides the main interface for interacting with a movie storage system.
+    It allows users to fetch movie data from the OMDb API, store movies, and retrieve information
+    using a given storage backend. The class initializes with the specified storage and loads
+    existing movies upon startup.
+    Attributes:
+        _storage (IStorage): The storage instance to manage movie data.
+        _movies (dict): A dictionary of movies retrieved from the storage.
+    """
+
     def __init__(self, storage):
+        """
+        Initialize the MovieApp instance with specified storage.
+        Args:
+            storage (IStorage): An instance of a storage class implementing the IStorage interface.
+        """
         init(autoreset=True)
         self._storage = storage
         self._movies = self._storage.list_movies()
 
-    def _fetch_movie_data(self, title):
-        """Fetch movie details from OMDb API by title."""
+    @staticmethod
+    def _fetch_movie_data(title):
+        """
+        Fetch detailed movie data from the OMDb API by title.
+        Args:
+            title (str): The title of the movie to fetch from the API.
+        Returns:
+            dict or None: A dictionary of movie details (e.g., Title, Year, Rating, Poster) if successful,
+                          or None if an error occurs or the movie is not found.
+        """
         api_url = f"http://www.omdbapi.com/?apikey={API_KEY}&t={title}"
         headers = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
@@ -31,7 +56,7 @@ class MovieApp:
             data = response.json()
             if "Error" in data:
                 print(Fore.RED + f"Error fetching movie data: {data['Error']}")
-                return None  # Return None if there's an API error in the data
+                return None
 
             return data
 
@@ -42,7 +67,7 @@ class MovieApp:
         except RequestException as err:
             print(Fore.RED + f"An unexpected error occurred: {err}")
 
-        return None  # Explicitly return None if request fails or encounters error
+        return None
 
     def _is_movie_list_empty(self):
         """
@@ -66,7 +91,8 @@ class MovieApp:
             movie_name = input("Enter movie name: ").strip()
             if movie_name == "":
                 print(Fore.RED + "Movie name cannot be empty.")
-            return movie_name
+            else:
+                return movie_name
 
     @staticmethod
     def _valid_rating():
@@ -96,58 +122,52 @@ class MovieApp:
             return
 
         print(Fore.MAGENTA + f"{len(self._movies)} movies in total")
-        for movie, details in self._movies.items():
-            print(f"{movie} ({details['year']}): {details['rating']:.1f}")
+        for movie_title, details in self._movies.items():
+            print(f"{movie_title} ({details['Year']}), {details['Rating']}, {details['Poster']}")
 
     def _command_add(self):
         """
         Adds a new movie to the storage if it doesn't already exist. Prompts the user to enter
         the movie name, release year, and rating, and then saves the new movie to storage.
-
         Returns:
             None
         """
-        # Get a valid movie name from the user
         movie_name = self._valid_movie_name()
+        data = self._fetch_movie_data(movie_name)
 
-        # Check if the movie already exists
-        if movie_name.lower() in (name.lower() for name in self._movies):
+        if data is None:
+            return
+
+        if movie_name in self._movies:
             print(Fore.RED + f"Movie '{movie_name}' already exists!")
             return
 
-        # Ask for the release year and ensure it's valid
-        while True:
-            try:
-                year = int(input("Enter the release year of the movie: "))
-                break  # Break the loop if a valid year is entered
-            except ValueError:
-                print(Fore.RED + "Please enter a valid year.")
+        # Extract data safely
+        title = data.get("Title")
+        year = int(data.get("Year")) if data.get("Year") else None
+        rating = float(data.get("imdbRating")) if data.get("imdbRating") else None
+        poster = data.get("Poster")
 
-        # Get a valid rating from the user
-        rating = self._valid_rating()
-
-        # Add the movie to storage
-        self._storage.add_movie(movie_name, year, rating)
-        print(Fore.GREEN + f"Movie '{movie_name}' successfully added!")
-
-        self._movies = self._storage.list_movies()
+        if title and year is not None and rating is not None and poster:
+            self._storage.add_movie(title, year, rating, poster)
+            print(Fore.GREEN + f"Movie '{title}' successfully added!")
+            self._movies = self._storage.list_movies()
+        else:
+            print(Fore.RED + "Some details are missing in the movie data. Please try another movie.")
 
     def _command_delete(self):
         """
         Removes a movie from the storage if it exists.
-
         Returns:
             None
         """
-        # Check if the movie list is empty
         if self._is_movie_list_empty():
             return
 
         # Get the movie name from the user and normalize it for case-insensitive comparison
-        movie_to_delete = self._valid_movie_name().strip().lower()
-        normalized_movies = {name.lower(): name for name in self._movies}
+        movie_to_delete = self._valid_movie_name()
+        normalized_movies = {title.lower(): title for title in self._movies}
 
-        # Check if the normalized name exists in the movies dictionary
         if movie_to_delete in normalized_movies:
             original_name = normalized_movies[movie_to_delete]
             try:
@@ -165,7 +185,6 @@ class MovieApp:
         Returns:
             None
         """
-        # Check if the movie list is empty
         if self._is_movie_list_empty():
             return
 
@@ -175,7 +194,7 @@ class MovieApp:
 
         # Check if the movie exists in the normalized dictionary
         if movie_to_update in normalized_movies:
-            original_name = normalized_movies[movie_to_update]  # Get original case-sensitive name
+            original_name = normalized_movies[movie_to_update]
             rating = self._valid_rating()
 
             # Try to update the movie rating in storage
@@ -199,11 +218,10 @@ class MovieApp:
         Returns:
             None
         """
-        # Check if the movie list is empty
         if self._is_movie_list_empty():
             return
 
-        ratings = [details["rating"] for details in self._movies.values()]
+        ratings = [details["Rating"] for details in self._movies.values()]
 
         # Calculate and display average rating
         average = sum(ratings) / len(ratings)
@@ -232,9 +250,9 @@ class MovieApp:
         Returns:
             None
         """
-        movies_with_rating = [movie for movie, details in self._movies.items() if details["rating"] == rating]
+        movies_with_rating = [movie for movie, details in self._movies.items() if details["Rating"] == rating]
         for movie in movies_with_rating:
-            print(f"{descriptor} movie: {movie}: {self._movies[movie]['rating']}")
+            print(f"{descriptor} movie: {movie}: {self._movies[movie]['Rating']}")
 
     def _command_random_movie(self):
         """
@@ -242,12 +260,11 @@ class MovieApp:
         Returns:
             None
         """
-        # Check if the movie list is empty
         if self._is_movie_list_empty():
             return
 
         random_film = random.choice(list(self._movies.keys()))
-        print(f"Your movie for tonight: {random_film}, it's rated {self._movies[random_film]['rating']}")
+        print(f"Your movie for tonight: {random_film}, it's rated {self._movies[random_film]['Rating']}")
 
     def _command_search(self):
         """
@@ -255,7 +272,6 @@ class MovieApp:
         Returns:
             None
         """
-        # Check if the movie list is empty
         if self._is_movie_list_empty():
             return
 
@@ -278,7 +294,7 @@ class MovieApp:
         if similar_movies:
             print(f"The movie \"{part_of_name}\" does not exist. Did you mean:")
             for movie in similar_movies:
-                print(f"{movie}: {self._movies[movie]['rating']}")
+                print(f"{movie}: {self._movies[movie]['Rating']}")
         else:
             print(Fore.RED + "No similar movies found.")
 
@@ -288,13 +304,12 @@ class MovieApp:
         Returns:
             None
         """
-        # Check if the movie list is empty
         if self._is_movie_list_empty():
             return
 
-        sorted_movies = sorted(self._movies.items(), key=lambda item: item[1]["rating"], reverse=True)
+        sorted_movies = sorted(self._movies.items(), key=lambda item: item[1]["Rating"], reverse=True)
         for movie, details in sorted_movies:
-            print(f"{movie} ({details['year']}): {details['rating']:.1f}")
+            print(f"{movie} ({details['Year']}): {details['Rating']:.1f}")
 
     def _sorted_by_year(self):
         """
@@ -302,7 +317,6 @@ class MovieApp:
         Returns:
             None
         """
-        # Check if the movie list is empty
         if self._is_movie_list_empty():
             return
 
@@ -311,25 +325,23 @@ class MovieApp:
             latest_movies = input("Do you want the latest movies first? (Y/N): ").strip().lower()
             print()
 
-            # Check if the input is valid
             if latest_movies == "y":
                 # Sort movies by year, latest movies first
-                latest_first = sorted(self._movies.items(), key=lambda item: item[1]["year"], reverse=True)
+                latest_first = sorted(self._movies.items(), key=lambda item: item[1]["Year"], reverse=True)
                 for movie, details in latest_first:
                     print(
-                        f"{movie} ({details['year']}): {details['rating']:.1f}")
-                break  # Exit the loop after displaying the list
+                        f"{movie} ({details['Year']}): {details['Rating']:.1f}")
+                break
 
             elif latest_movies == "n":
                 # Sort movies by year, oldest movies first
-                latest_last = sorted(self._movies.items(), key=lambda item: item[1]["year"])
+                latest_last = sorted(self._movies.items(), key=lambda item: item[1]["Year"])
                 for movie, details in latest_last:
                     print(
-                        f"{movie} ({details['year']}): {details['rating']:.1f}")
+                        f"{movie} ({details['Year']}): {details['Rating']:.1f}")
                 break
 
             else:
-                # If the input is invalid, ask the user to enter a valid choice
                 print("Please enter 'Y' or 'N'")
                 continue
 
@@ -347,7 +359,7 @@ class MovieApp:
         while True:
             min_rating = input("Enter minimum rating (leave blank for no minimum rating): ")
             if min_rating == "":
-                min_rating = None  # No minimum rating
+                min_rating = None
                 break
             try:
                 min_rating = float(min_rating)
@@ -362,7 +374,7 @@ class MovieApp:
         while True:
             start_year = input("Enter start year (leave blank for no start year): ")
             if start_year == "":
-                start_year = None  # No start year filter
+                start_year = None
                 break
             try:
                 start_year = int(start_year)
@@ -377,7 +389,7 @@ class MovieApp:
         while True:
             end_year = input("Enter end year (leave blank for no end year): \n")
             if end_year == "":
-                end_year = None  # No end year filter
+                end_year = None
                 break
             try:
                 end_year = int(end_year)
@@ -391,8 +403,8 @@ class MovieApp:
         # Apply the filtering logic
         filtered_movies = []
         for movie, details in self._movies.items():
-            year = details['year']
-            rating = details['rating']
+            year = details['Year']
+            rating = details['Rating']
 
             # Filter based on user inputs
             if (min_rating is None or rating >= min_rating) and \
@@ -439,10 +451,10 @@ class MovieApp:
                 if choice in self.menu:
                     function = self.menu[choice][1]
                     if function is not None:
-                        function(self)  # Call the function without arguments
+                        function(self)
                     else:
                         print("Bye!")
-                        break  # Exit the program
+                        break
                 else:
                     print(Fore.RED + "Invalid choice. Please enter a number between 0 and 11.")
             except ValueError:

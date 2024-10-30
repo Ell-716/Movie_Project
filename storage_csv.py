@@ -4,6 +4,8 @@ from istorage import IStorage
 
 
 class StorageCsv(IStorage):
+    """StorageCsv class implements the IStorage interface for managing movie data in CSV format."""
+
     def __init__(self, file_path):
         """
         Initializes the StorageCsv instance.
@@ -12,76 +14,56 @@ class StorageCsv(IStorage):
         """
         self._file_path = file_path
 
-    def load_data(self):
-        """
-        Loads movie data from the CSV file and returns it as a dictionary.
-        Returns:
-            dict: A dictionary containing movie titles as keys and their details (year and rating) as values.
-        Raises:
-            FileNotFoundError: If the CSV file does not exist.
-        """
-        if not os.path.exists(self._file_path):
-            return {}  # Return an empty dictionary if the file does not exist
-
-        movies = {}
-        with open(self._file_path, mode="r", newline='', encoding='utf-8') as file:
-            reader = csv.reader(file)
-            for row in reader:
-                if len(row) == 3:  # Expecting three columns: title, year, and rating
-                    title, year, rating = row
-                    movies[title] = {'year': int(year), 'rating': float(rating)}
-        return movies
-
-    def save_movies(self, movies):
-        """
-        Saves the movies to the CSV file.
-        Args:
-            movies (dict): A dictionary of movies to save.
-        """
-        with open(self._file_path, mode="w", newline='', encoding='utf-8') as file:
-            writer = csv.writer(file)
-            for title, details in movies.items():
-                writer.writerow([title, details['year'], details['rating']])
-
     def list_movies(self):
         """
-        Returns the dictionary of movies loaded from the CSV file.
+        Retrieves a dictionary of movies loaded from the CSV file.
         Returns:
             dict: A dictionary of movies with their details.
         """
-        return self.load_data()
+        if not os.path.exists(self._file_path):
+            return {}
 
-    def add_movie(self, title, year, rating):
-        """
-        Adds a new movie to the storage.
-        Args:
-            title (str): The title of the movie.
-            year (int): The release year of the movie.
-            rating (float): The rating of the movie.
-        """
-        movies = self.load_data()
-        movies[title] = {'year': year, 'rating': rating}
-        self.save_movies(movies)
+        movies = {}
+        with open(self._file_path, mode="r", newline='', encoding='utf-8') as file:
+            reader = csv.DictReader(file)
+            for row in reader:
+                # Ensure all expected keys are present in the row
+                if isinstance(row, dict) and all(k in row for k in ['Title', 'Year', 'Rating', 'Poster']):
+                    title = row['Title']
+                    try:
+                        # Convert year to int and rating to float
+                        year = int(row['Year'])
+                        rating = float(row['Rating']) if row['Rating'] else None
+                        poster = row['Poster']
 
-    def delete_movie(self, title):
-        """
-        Deletes a movie from the storage.
-        Args:
-            title (str): The title of the movie to delete.
-        """
-        movies = self.load_data()
-        if title in movies:
-            del movies[title]
-            self.save_movies(movies)
+                        # Store movie details in the correct format
+                        movies[title] = {
+                            "Year": year,
+                            "Rating": rating,
+                            "Poster": poster
+                        }
+                    except ValueError as ve:
+                        print(f"Error converting data for movie '{title}': {ve}")
+                        continue  # Skip this movie entry if conversion fails
 
-    def update_movie(self, title, rating):
-        """
-        Updates the rating of an existing movie.
+        return movies
+
+    def save_movies(self, movies):
+        """Saves the current state of the movies to the CSV file.
         Args:
-            title (str): The title of the movie to update.
-            rating (float): The new rating for the movie.
+            movies (dict): A dictionary of movies containing their details.
         """
-        movies = self.load_data()
-        if title in movies:
-            movies[title]['rating'] = rating
-            self.save_movies(movies)
+        with open(self._file_path, mode="w", newline='', encoding='utf-8') as file:
+            writer = csv.DictWriter(file, fieldnames=["Title", "Year", "Rating", "Poster"])
+
+            # Write the header row
+            writer.writeheader()
+
+            # Write each movie's details
+            for title, details in movies.items():
+                writer.writerow({
+                    "Title": title,
+                    "Year": details["Year"],
+                    "Rating": details["Rating"],
+                    "Poster": details["Poster"]
+                })
