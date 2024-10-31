@@ -10,17 +10,22 @@ body {
   background: orange;
   color: white;
   text-align: center;
-  font-size: 18pt;
+  font-size: 60pt;
   border: 5px solid white;
+  border-radius: 5px;
 }
 
 .list-movies-title h1 {
+  font-family: Courier New;
+  font-weight: bold;
   color: white;
   text-shadow:
     -1px -1px 0 #888,
     1px -1px 0 #888,
     -1px 1px 0 #888,
     1px 1px 0 #888;
+  font-size: 75pt;
+  margin: 0;
 }
 
 .movie-grid {
@@ -40,21 +45,22 @@ body {
 }
 
 .movie {
-  width: 150px;               /* Adjusted width for the card */
-  padding: 10px;              /* Padding inside the card */
-  border-radius: 8px;         /* Rounded corners for a card-like feel */
-  background-color: #333;     /* Background color of the card */
-  color: white;               /* Text color inside the card */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Soft shadow around the card */
+  width: 150px;
+  height: 350px;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #333;
+  color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   display: flex;
-  flex-direction: column;     /* Stack items vertically */
-  align-items: center;        /* Center align items inside the card */
-  margin-bottom: 20px;        /* Space below each card */
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
 .movie-title,
 .movie-year {
-  margin: 5px 0;              /* Consistent spacing between elements */
+  margin: 5px 0;
   text-align: center;
 }
 

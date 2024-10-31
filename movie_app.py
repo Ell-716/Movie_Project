@@ -469,7 +469,7 @@ class MovieApp:
         with open("_static/index_template.html", "r") as template_file:
             template_content = template_file.read()
 
-        final_html = template_content.replace("__TEMPLATE_TITLE__", "My Movie App")
+        final_html = template_content.replace("__TEMPLATE_TITLE__", "🎬 My Movie App")
         final_html = final_html.replace("__TEMPLATE_MOVIE_GRID__", movie_grid)
 
         with open("_static/index.html", "w") as output_file:
