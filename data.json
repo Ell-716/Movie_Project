@@ -68,5 +68,30 @@
         "Year": 2009,
         "Rating": 6.4,
         "Poster": "https://m.media-amazon.com/images/M/MV5BMTY5MTUyNDgwMF5BMl5BanBnXkFtZTcwNzYzMDQyMg@@._V1_SX300.jpg"
+    },
+    "The Shawshank Redemption": {
+        "Year": 1994,
+        "Rating": 9.3,
+        "Poster": "https://m.media-amazon.com/images/M/MV5BMDAyY2FhYjctNDc5OS00MDNlLThiMGUtY2UxYWVkNGY2ZjljXkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    "The Fifth": {
+        "Year": 2007,
+        "Rating": 6.6,
+        "Poster": "https://m.media-amazon.com/images/M/MV5BMzE1OWQ0MDUtY2I5NC00MjEzLTg3YjMtMDliOGFiYWZkY2ExXkEyXkFqcGdeQXVyNzQzNzQxNzI@._V1_SX300.jpg"
+    },
+    "Pulp Fiction": {
+        "Year": 1994,
+        "Rating": 8.9,
+        "Poster": "https://m.media-amazon.com/images/M/MV5BYTViYTE3ZGQtNDBlMC00ZTAyLTkyODMtZGRiZDg0MjA2YThkXkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    "She": {
+        "Year": 2020,
+        "Rating": 6.4,
+        "Poster": "https://m.media-amazon.com/images/M/MV5BNDA0ZmVjZDAtYjkwYi00ZWQ5LTg2YTItODMwNzU1MmE5YmQwXkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    "Harry Potter and the Deathly Hallows: Part 2": {
+        "Year": 2011,
+        "Rating": 8.1,
+        "Poster": "https://m.media-amazon.com/images/M/MV5BOTA1Mzc2N2ItZWRiNS00MjQzLTlmZDQtMjU0NmY1YWRkMGQ4XkEyXkFqcGc@._V1_SX300.jpg"
     }
 }

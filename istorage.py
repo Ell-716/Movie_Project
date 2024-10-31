@@ -52,10 +52,6 @@ class IStorage(ABC):
         """
         movies = self.list_movies()
 
-        if title in movies:
-            print(Fore.RED + f"Movie '{title}' already exists!")
-            return
-
         movies[title] = {
             "Year": year,
             "Rating": rating,

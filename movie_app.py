@@ -49,25 +49,43 @@ class MovieApp:
             'Accept-Language': 'en-US,en;q=0.5'
         }
 
-        try:
-            response = requests.get(api_url, headers=headers)
-            response.raise_for_status()  # Raise HTTPError for bad responses (4xx, 5xx)
+        while True:  # Loop until valid data is returned or user opts out
+            try:
+                response = requests.get(api_url, headers=headers)
+                response.raise_for_status()  # Raise HTTPError for bad responses (4xx, 5xx)
 
-            data = response.json()
-            if "Error" in data:
-                print(Fore.RED + f"Error fetching movie data: {data['Error']}")
-                return None
+                data = response.json()
+                if "Error" in data:
+                    print(Fore.RED + f"Error fetching movie data: {data['Error']}")
+                    return None
 
-            return data
+                # Check if the fetched title exactly matches the input title
+                fetched_title = data.get("Title", "").lower()
+                input_title = title.lower()
 
-        except (HTTPError, ConnectionError, Timeout) as req_err:
-            print(Fore.RED + f"Request error occurred: {req_err}")
-        except ValueError as json_err:
-            print(Fore.RED + f"Error parsing JSON: {json_err}")
-        except RequestException as err:
-            print(Fore.RED + f"An unexpected error occurred: {err}")
+                # If there's a partial match, confirm with the user
+                if fetched_title != input_title:
+                    print(Fore.YELLOW + f"Did you mean '{data['Title']}'? (y/n)")
+                    user_input = input().strip().lower()
+                    if user_input == 'y':
+                        return data  # Return the fetched data if confirmed
+                    else:
+                        print(Fore.YELLOW + "Please enter the full movie name or refine the title.")
+                        title = input("Enter movie name: ")  # Ask for a new movie title
+                        api_url = f"http://www.omdbapi.com/?apikey={API_KEY}&t={title}"  # Update URL with new title
+                        continue  # Retry fetching data with the new title
 
-        return None
+                return data
+
+            except (HTTPError, ConnectionError, Timeout) as req_err:
+                print(Fore.RED + f"Request error occurred: {req_err}")
+                return None  # Exit on request errors
+            except ValueError as json_err:
+                print(Fore.RED + f"Error parsing JSON: {json_err}")
+                return None  # Exit on JSON parsing errors
+            except RequestException as err:
+                print(Fore.RED + f"An unexpected error occurred: {err}")
+                return None  # Exit on other request errors
 
     def _is_movie_list_empty(self):
         """
@@ -83,14 +101,18 @@ class MovieApp:
     @staticmethod
     def _valid_movie_name():
         """
-        Prompts the user for a valid movie name.
+        Prompts the user for a valid movie name, ensuring it is not empty and in a valid format.
         Returns:
-            str: The movie name entered by the user.
+            str: The validated movie name entered by the user.
         """
         while True:
             movie_name = input("Enter movie name: ").strip()
-            if movie_name == "":
+
+            # Validate the movie name format
+            if not movie_name:
                 print(Fore.RED + "Movie name cannot be empty.")
+            elif not movie_name.isalnum() and " " not in movie_name:
+                print(Fore.RED + "Invalid characters in movie name. Please use only letters and numbers.")
             else:
                 return movie_name
 
@@ -138,17 +160,22 @@ class MovieApp:
         if data is None:
             return
 
-        if movie_name in self._movies:
-            print(Fore.RED + f"Movie '{movie_name}' already exists!")
+        # Normalize movie title
+        existing_titles = {title.strip().lower() for title in self._movies.keys()}
+        if data.get("Title").strip().lower() in existing_titles:
+            print(Fore.RED + f"Movie '{data.get('Title')}' already exists!")
             return
 
-        # Extract data safely
+        # Extract and add movie data
         title = data.get("Title")
         year = int(data.get("Year")) if data.get("Year") else None
-        rating = float(data.get("imdbRating")) if data.get("imdbRating") else None
+
+        # Handle IMDb rating with check for 'N/A'
+        imdb_rating = data.get("imdbRating")
+        rating = float(imdb_rating) if imdb_rating != "N/A" else None
         poster = data.get("Poster")
 
-        if title and year is not None and rating is not None and poster:
+        if title and year and rating and poster:
             self._storage.add_movie(title, year, rating, poster)
             print(Fore.GREEN + f"Movie '{title}' successfully added!")
             self._movies = self._storage.list_movies()
@@ -460,33 +487,36 @@ class MovieApp:
         The program runs in a loop until the user chooses to exit.
         Returns:
             None
-        Raises:
-            ValueError: If the user input is not a valid integer choice from the menu.
         """
         print(Fore.CYAN + "\n********** My Movies Database **********")
 
         while True:
+            # Display the menu
+            print("\nMenu:")
+            for key, (description, _) in self.menu.items():
+                print(f"{key}. {description}")
+
+            choice_input = input(Fore.YELLOW + "\nEnter choice (0-11): ")
+            print()
+
+            # Safeguard to only process integer choices
             try:
-                # Display the menu
-                print("\nMenu:")
-                for key, (description, _) in self.menu.items():
-                    print(f"{key}. {description}")
-
-                choice = int(input(Fore.YELLOW + "\nEnter choice (0-11): "))
-                print()
-
-                # Handle the user's menu choice
-                if choice in self.menu:
-                    function = self.menu[choice][1]
-                    if function is not None:
-                        function(self)
-                    else:
-                        print("Bye!")
-                        break
-                else:
-                    print(Fore.RED + "Invalid choice. Please enter a number between 0 and 11.")
+                choice = int(choice_input)
             except ValueError:
                 print(Fore.RED + "Invalid choice. Please enter a number between 0 and 11.")
+                continue
+
+            # Handle the user's menu choice
+            if choice in self.menu:
+                function = self.menu[choice][1]
+                if function is not None:
+                    function(self)
+                else:
+                    print("Bye!")
+                    break
+            else:
+                print(Fore.RED + "Invalid choice. Please enter a number between 0 and 11.")
+
             print()
             input(Fore.BLUE + "Press enter to continue")
 
