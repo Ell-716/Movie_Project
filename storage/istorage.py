@@ -72,7 +72,7 @@ class IStorage(ABC):
             del movies[title]
             self.save_movies(movies)
         else:
-            print(f"The movie '{title}' was not found.")
+            print(Fore.RED + f"The movie '{title}' was not found.")
 
     def update_movie(self, title, rating):
         """
@@ -87,4 +87,4 @@ class IStorage(ABC):
             movies[title]["Rating"] = rating
             self.save_movies(movies)
         else:
-            print(f"The movie '{title}' was not found.")
+            print(Fore.RED + f"The movie '{title}' was not found.")

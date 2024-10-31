@@ -1,6 +1,7 @@
-from storage_json import StorageJson
-from storage_csv import StorageCsv
+from storage.storage_json import StorageJson
+from storage.storage_csv import StorageCsv
 from movie_app import MovieApp
+import os
 
 
 def main():
@@ -19,20 +20,20 @@ def main():
     choice = input("Enter your choice (1 or 2): ")
 
     if choice == '1':
-        filename = input("Enter the name of the JSON file (e.g., data.json): ")
+        filename = input("Enter the name of the JSON file (without extension, e.g., data): ")
         if not filename.endswith('.json'):
-            print("Invalid filename. Defaulting to 'data.json'.")
-            filename = 'data.json'
-        storage = StorageJson(filename)
+            filename += '.json'  # Ensure it ends with .json
+        filepath = os.path.join('data', filename)  # Construct the full path
+        storage = StorageJson(filepath)
     elif choice == '2':
-        filename = input("Enter the name of the CSV file (e.g., movies.csv): ")
+        filename = input("Enter the name of the CSV file (without extension, e.g., movies): ")
         if not filename.endswith('.csv'):
-            print("Invalid filename. Defaulting to 'movies.csv'.")
-            filename = 'movies.csv'
-        storage = StorageCsv(filename)
+            filename += '.csv'  # Ensure it ends with .csv
+        filepath = os.path.join('data', filename)  # Construct the full path
+        storage = StorageCsv(filepath)
     else:
         print("Invalid choice. Defaulting to JSON Storage with 'data.json'.")
-        storage = StorageJson('data.json')
+        storage = StorageJson('data/data.json')  # Ensure correct default path
 
     try:
         movie_app = MovieApp(storage)
