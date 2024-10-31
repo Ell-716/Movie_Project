@@ -63,12 +63,17 @@ Create a .env file in the project root directory. Get your own api on [OMDb API 
 
 To run the application, follow these steps:
 
-1. **Start the application**:
+1. **Run**:
 
    ```bash
-   python main.py
+   main.py
    
-2. **Follow the on-screen instructions**: to add and manage movies.
+2. **Or start the application**:
+
+   ```bash
+   python3 main.py data/denis.csv
+   
+3. **Follow the on-screen instructions**: to add and manage movies.
 
 ## Contributing
 

@@ -4,8 +4,8 @@ import requests
 import random
 from dotenv import load_dotenv
 from requests.exceptions import HTTPError, ConnectionError, Timeout, RequestException
-from colorama import init, Fore
 from fuzzywuzzy import process
+from colorama import init, Fore
 
 load_dotenv()
 API_KEY = os.getenv("API_KEY")

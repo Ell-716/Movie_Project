@@ -1,5 +1,4 @@
 import json
-import os
 from storage.istorage import IStorage
 
 
@@ -10,7 +9,7 @@ class StorageJson(IStorage):
     as a dictionary of dictionaries structure, where each movie title is a unique key,
     and its value is a dictionary of details (Year, Rating, and Poster).
     Attributes:
-        _file_path (str): The path to the JSON file where movie data is stored.
+        file_path (str): The path to the JSON file where movie data is stored.
     Methods:
         list_movies():
             Reads the JSON file and returns a dictionary of movies with their details,
@@ -26,7 +25,7 @@ class StorageJson(IStorage):
         Args:
             file_path (str): The path to the JSON file where movie data is stored.
         """
-        self._file_path = file_path
+        self.file_path = file_path
 
     def list_movies(self):
         """
@@ -37,7 +36,7 @@ class StorageJson(IStorage):
                   or has an unexpected structure.
         """
         try:
-            with open(self._file_path, "r", encoding='utf-8') as file:
+            with open(self.file_path, "r", encoding='utf-8') as file:
                 data = json.load(file)
                 if isinstance(data, dict):
                     return data
@@ -62,7 +61,7 @@ class StorageJson(IStorage):
                            of movie details including 'Year', 'Rating', and 'Poster'.
         """
         try:
-            with open(self._file_path, "w", encoding='utf-8') as file:
+            with open(self.file_path, "w", encoding='utf-8') as file:
                 json.dump(movies, file, ensure_ascii=False, indent=4)
         except Exception as e:
             print(f"An error occurred while saving the movies: {e}")

@@ -12,7 +12,7 @@ class StorageCsv(IStorage):
         Args:
             file_path (str): The path to the CSV file for storing movie data.
         """
-        self._file_path = file_path
+        self.file_path = file_path
 
     def list_movies(self):
         """
@@ -20,11 +20,11 @@ class StorageCsv(IStorage):
         Returns:
             dict: A dictionary of movies with their details.
         """
-        if not os.path.exists(self._file_path):
+        if not os.path.exists(self.file_path):
             return {}
 
         movies = {}
-        with open(self._file_path, mode="r", newline='', encoding='utf-8') as file:
+        with open(self.file_path, mode="r", newline='', encoding='utf-8') as file:
             reader = csv.DictReader(file)
             for row in reader:
                 # Ensure all expected keys are present in the row
@@ -53,7 +53,7 @@ class StorageCsv(IStorage):
         Args:
             movies (dict): A dictionary of movies containing their details.
         """
-        with open(self._file_path, mode="w", newline='', encoding='utf-8') as file:
+        with open(self.file_path, mode="w", newline='', encoding='utf-8') as file:
             writer = csv.DictWriter(file, fieldnames=["Title", "Year", "Rating", "Poster"])
 
             # Write the header row
