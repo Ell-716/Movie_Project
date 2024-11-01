@@ -41,7 +41,7 @@ def main():
             if file_path.endswith('.json'):
                 file.write('{}')
             elif file_path.endswith('.csv'):
-                file.write("Title,Year,Rating,Poster\n")
+                file.write("Title,Year,Rating,Poster,Note,imdbID\n")
             print(f"New file '{file_path}' has been created.")
 
     movie_app = MovieApp(storage)

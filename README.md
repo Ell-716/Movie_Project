@@ -2,13 +2,13 @@
 
 ## Overview
 
-**Movie_Project** is a simple yet powerful movie database application that allows users to manage their favorite movies. With this app, users can add, view, and store information about movies, including their titles, release years, ratings, and poster images.
+**Movie_Project** is a simple yet powerful movie database application that allows users to manage their favorite movies. With this app, users can add, view, and store information about movies, including their titles, release years, ratings, and poster images. 
+
+> *This project was developed as part of an assignment in the Software Engineer Bootcamp.* 🎓
 
 ## Purpose
 
 The primary purpose of Movie_Project is to provide a user-friendly interface for movie management. Whether you are a movie enthusiast wanting to keep track of your watched films or someone looking for a simple way to catalog your favorite movies, this app serves as an efficient solution. 
-
-> *This project was developed as part of an assignment in the Software Engineer Bootcamp.* 🎓
 
 ## Features
 
@@ -20,10 +20,10 @@ The primary purpose of Movie_Project is to provide a user-friendly interface for
 - 🎲 **Random Movie**: Get a random movie suggestion from your collection.
 - 🔍 **Search Movie**: Quickly search for a movie by title or other criteria.
 - ⭐ **Movies Sorted by Rating**: View movies sorted based on their ratings.
-- 📅 **Movies Sorted by Year**: View movies sorted by their release years.
+- 📅 **Movies Sorted by Year**: View movies sorted based on their release years.
 - 🎞️ **Filter Movies**: Filter your movie collection based on different criteria.
 - 🌐 **Generate Website**: Create a static website to showcase your movie collection.
-
+- 🎬 **IMDb Links**: Click on the movie poster to be redirected to the movie's page on IMDb for more details.
 ## Technologies Used
 
 - **Python**: The main programming language used for development.

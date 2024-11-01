@@ -41,7 +41,7 @@ class IStorage(ABC):
         """
         pass
 
-    def add_movie(self, title, year, rating, poster):
+    def add_movie(self, title, year, rating, poster, imdb_link):
         """
         Add a new movie entry to storage.
         Args:
@@ -49,13 +49,17 @@ class IStorage(ABC):
             year (int): The release year of the movie.
             rating (float): The IMDb rating of the movie.
             poster (str): The URL of the movie's poster image.
+            imdb_link (str): The URL link to the movie's page on IMDb.
+        Returns:
+            None
         """
         movies = self.list_movies()
 
         movies[title] = {
             "Year": year,
             "Rating": rating,
-            "Poster": poster
+            "Poster": poster,
+            "imdbID": imdb_link
         }
 
         self.save_movies(movies)
@@ -86,11 +90,10 @@ class IStorage(ABC):
 
         if title in movies:
             if note is not None and note.strip():
-                movies[title]['note'] = note.strip()
+                movies[title]['Note'] = note.strip()
             else:
-                if 'note' in movies[title]:
-                    del movies[title]['note']
+                if 'Note' in movies[title]:
+                    del movies[title]['Note']
             self.save_movies(movies)
         else:
             print(Fore.RED + f"The movie '{title}' was not found.")
-

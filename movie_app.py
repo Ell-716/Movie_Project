@@ -49,7 +49,7 @@ class MovieApp:
             'Accept-Language': 'en-US,en;q=0.5'
         }
 
-        while True:  # Loop until valid data is returned or user opts out
+        while True:
             try:
                 response = requests.get(api_url, headers=headers)
                 response.raise_for_status()  # Raise HTTPError for bad responses (4xx, 5xx)
@@ -68,24 +68,24 @@ class MovieApp:
                     print(Fore.YELLOW + f"Did you mean '{data['Title']}'? (y/n)")
                     user_input = input().strip().lower()
                     if user_input == 'y':
-                        return data  # Return the fetched data if confirmed
+                        return data
                     else:
                         print(Fore.YELLOW + "Please enter the full movie name or refine the title.")
-                        title = input("Enter movie name: ")  # Ask for a new movie title
-                        api_url = f"http://www.omdbapi.com/?apikey={API_KEY}&t={title}"  # Update URL with new title
-                        continue  # Retry fetching data with the new title
+                        title = input("Enter movie name: ")
+                        api_url = f"http://www.omdbapi.com/?apikey={API_KEY}&t={title}"
+                        continue
 
                 return data
 
             except (HTTPError, ConnectionError, Timeout) as req_err:
                 print(Fore.RED + f"Request error occurred: {req_err}")
-                return None  # Exit on request errors
+                return None
             except ValueError as json_err:
                 print(Fore.RED + f"Error parsing JSON: {json_err}")
-                return None  # Exit on JSON parsing errors
+                return None
             except RequestException as err:
                 print(Fore.RED + f"An unexpected error occurred: {err}")
-                return None  # Exit on other request errors
+                return None
 
     def _is_movie_list_empty(self):
         """
@@ -150,7 +150,8 @@ class MovieApp:
     def _command_add(self):
         """
         Adds a new movie to the storage if it doesn't already exist. Prompts the user to enter
-        the movie name, release year, and rating, and then saves the new movie to storage.
+        the movie name, and then saves the new movie to storage.
+        The movie data includes the title, year, rating, poster, and a link to its IMDb page.
         Returns:
             None
         """
@@ -166,17 +167,19 @@ class MovieApp:
             print(Fore.RED + f"Movie '{data.get('Title')}' already exists!")
             return
 
-        # Extract and add movie data
+        # Extract movie data
         title = data.get("Title")
         year = int(data.get("Year")) if data.get("Year") else None
-
-        # Handle IMDb rating with check for 'N/A'
         imdb_rating = data.get("imdbRating")
         rating = float(imdb_rating) if imdb_rating != "N/A" else None
         poster = data.get("Poster")
+        imdb_id = data.get("imdbID")
 
-        if title and year and rating and poster:
-            self._storage.add_movie(title, year, rating, poster)
+        # Construct the IMDb link using the imdbID
+        imdb_link = f"https://www.imdb.com/title/{imdb_id}/" if imdb_id else None
+
+        if title and year and rating and poster and imdb_link:
+            self._storage.add_movie(title, year, rating, poster, imdb_link)
             print(Fore.GREEN + f"Movie '{title}' successfully added!")
             self._movies = self._storage.list_movies()
         else:
@@ -455,11 +458,15 @@ class MovieApp:
 
         movie_grid = ""
         for title, details in movies.items():
-            note = details.get('note', '')
+            note = details.get('Note', '')
+            imdb_link = details.get('imdbID')
+
             movie_grid += f"""
                 <li>
                     <div class="movie">
-                        <img class="movie-poster" src="{details['Poster']}"/>
+                        <a href="{imdb_link}" target="_blank">
+                            <img class="movie-poster" src="{details['Poster']}" alt="{title} poster"/>
+                        </a>
                         <div class="movie-rating">
                             <svg width="10" height="10" fill="gold" viewBox="0 0 24 24">
                                 <path d="M12 20.1l5.82 3.682c1.066.675 2.37-.322 2.09-1.584l-1.543-6.926 
@@ -471,10 +478,11 @@ class MovieApp:
                         </div>
                         <div class="movie-title">{title}</div>
                         <div class="movie-year">{details['Year']}</div>
-                        <div class='movie-note'>{note}</div>   
+                        <div class="movie-note">{note}</div>                     
                     </div>
                 </li>
                 """
+
         with open("_static/index_template.html", "r") as template_file:
             template_content = template_file.read()
 

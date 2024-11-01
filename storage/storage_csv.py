@@ -4,7 +4,8 @@ from storage.istorage import IStorage
 
 
 class StorageCsv(IStorage):
-    """StorageCsv class implements the IStorage interface for managing movie data in CSV format."""
+    """StorageCsv class implements the IStorage interface for managing
+    movie data in CSV format."""
 
     def __init__(self, file_path):
         """
@@ -27,24 +28,26 @@ class StorageCsv(IStorage):
         with open(self.file_path, mode="r", newline='', encoding='utf-8') as file:
             reader = csv.DictReader(file)
             for row in reader:
-                if isinstance(row, dict) and all(k in row for k in ['Title', 'Year', 'Rating', 'Poster']):
+                if isinstance(row, dict) and all(k in row for k in
+                                                 ['Title', 'Year', 'Rating', 'Poster', 'imdbID']):
                     title = row['Title']
                     try:
                         year = int(row['Year'])
                         rating = float(row['Rating']) if row['Rating'] else None
                         poster = row['Poster']
                         note = row.get('Note', '')
+                        imdb_link = row['imdbID']
 
                         movies[title] = {
                             "Year": year,
                             "Rating": rating,
                             "Poster": poster,
-                            "note": note
+                            "Note": note,
+                            "imdbID": imdb_link
                         }
                     except ValueError as ve:
                         print(f"Error converting data for movie '{title}': {ve}")
                         continue
-
         return movies
 
     def save_movies(self, movies):
@@ -53,7 +56,7 @@ class StorageCsv(IStorage):
             movies (dict): A dictionary of movies containing their details.
         """
         with open(self.file_path, mode="w", newline='', encoding='utf-8') as file:
-            writer = csv.DictWriter(file, fieldnames=["Title", "Year", "Rating", "Poster", "Note"])
+            writer = csv.DictWriter(file, fieldnames=["Title", "Year", "Rating", "Poster", "Note", "imdbID"])
 
             writer.writeheader()
 
@@ -63,5 +66,6 @@ class StorageCsv(IStorage):
                     "Year": details["Year"],
                     "Rating": details["Rating"],
                     "Poster": details["Poster"],
-                    "Note": details.get("note", '')
+                    "Note": details.get("Note", ''),
+                    "imdbID": details.get("imdbID", '')
                 })
