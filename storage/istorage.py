@@ -74,17 +74,23 @@ class IStorage(ABC):
         else:
             print(Fore.RED + f"The movie '{title}' was not found.")
 
-    def update_movie(self, title, rating):
+    def update_movie(self, title, note=None):
         """
-        Update the IMDb rating of an existing movie in storage.
+        Update or remove a note for an existing movie in storage.
+
         Args:
             title (str): The title of the movie to update.
-            rating (float): The new rating for the movie.
+            note (str or None): The note to add to the movie. If None or empty string, removes the note.
         """
         movies = self.list_movies()
 
         if title in movies:
-            movies[title]["Rating"] = rating
+            if note is not None and note.strip():
+                movies[title]['note'] = note.strip()
+            else:
+                if 'note' in movies[title]:
+                    del movies[title]['note']
             self.save_movies(movies)
         else:
             print(Fore.RED + f"The movie '{title}' was not found.")
+

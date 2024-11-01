@@ -15,7 +15,7 @@ The primary purpose of Movie_Project is to provide a user-friendly interface for
 - 📜 **List Movies**: View all movies in your collection.
 - ➕ **Add Movie**: Easily add new movies to your database.
 - ❌ **Delete Movie**: Remove movies from your collection.
-- ✏️ **Update Movie**: Modify details of existing movies.
+- ✏️ **Update Movie**: Add or remove a note.
 - 📊 **Stats**: View statistics about your movie collection.
 - 🎲 **Random Movie**: Get a random movie suggestion from your collection.
 - 🔍 **Search Movie**: Quickly search for a movie by title or other criteria.

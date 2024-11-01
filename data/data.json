@@ -2,12 +2,14 @@
     "The Matrix": {
         "Year": 1999,
         "Rating": 8.7,
-        "Poster": "https://m.media-amazon.com/images/M/MV5BN2NmN2VhMTQtMDNiOS00NDlhLTliMjgtODE2ZTY0ODQyNDRhXkEyXkFqcGc@._V1_SX300.jpg"
+        "Poster": "https://m.media-amazon.com/images/M/MV5BN2NmN2VhMTQtMDNiOS00NDlhLTliMjgtODE2ZTY0ODQyNDRhXkEyXkFqcGc@._V1_SX300.jpg",
+        "note": "Action movie!"
     },
     "Fight Club": {
         "Year": 1999,
         "Rating": 8.8,
-        "Poster": "https://m.media-amazon.com/images/M/MV5BOTgyOGQ1NDItNGU3Ny00MjU3LTg2YWEtNmEyYjBiMjI1Y2M5XkEyXkFqcGc@._V1_SX300.jpg"
+        "Poster": "https://m.media-amazon.com/images/M/MV5BOTgyOGQ1NDItNGU3Ny00MjU3LTg2YWEtNmEyYjBiMjI1Y2M5XkEyXkFqcGc@._V1_SX300.jpg",
+        "note": "My favorite movie"
     },
     "The Godfather": {
         "Year": 1972,
@@ -42,7 +44,8 @@
     "Venom": {
         "Year": 2018,
         "Rating": 6.6,
-        "Poster": "https://m.media-amazon.com/images/M/MV5BNTYwMDg5MDItNjhmZi00NmVmLThjNWItMmNkMjVkMWRhNzI2XkEyXkFqcGc@._V1_SX300.jpg"
+        "Poster": "https://m.media-amazon.com/images/M/MV5BNTYwMDg5MDItNjhmZi00NmVmLThjNWItMmNkMjVkMWRhNzI2XkEyXkFqcGc@._V1_SX300.jpg",
+        "note": "Cool movie!"
     },
     "Smile": {
         "Year": 2022,
@@ -93,5 +96,11 @@
         "Year": 2011,
         "Rating": 8.1,
         "Poster": "https://m.media-amazon.com/images/M/MV5BOTA1Mzc2N2ItZWRiNS00MjQzLTlmZDQtMjU0NmY1YWRkMGQ4XkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    "The Mask": {
+        "Year": 1994,
+        "Rating": 6.9,
+        "Poster": "https://m.media-amazon.com/images/M/MV5BNGNmNjI0ZmMtMzI5MC00ZjUyLWFlZDEtYjUyMGZlN2E3N2E2XkEyXkFqcGc@._V1_SX300.jpg",
+        "note": "Funny movie!!!"
     }
 }
