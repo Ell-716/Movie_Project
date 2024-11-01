@@ -120,3 +120,9 @@ body {
 .movie {
     position: relative;
 }
+
+.flag {
+    width: 24px;
+    height: auto;
+    margin-top: 5px;
+}

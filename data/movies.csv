@@ -1,4 +1,3 @@
-Title,Year,Rating,Poster,Note,imdbID
-American Pie,1999,7.0,https://m.media-amazon.com/images/M/MV5BMTg3ODY5ODI1NF5BMl5BanBnXkFtZTgwMTkxNTYxMTE@._V1_SX300.jpg,,https://www.imdb.com/title/tt0163651/
-The Mask,1994,6.9,https://m.media-amazon.com/images/M/MV5BNGNmNjI0ZmMtMzI5MC00ZjUyLWFlZDEtYjUyMGZlN2E3N2E2XkEyXkFqcGc@._V1_SX300.jpg,,https://www.imdb.com/title/tt0110475/
-Pretty Woman,1990,7.1,https://m.media-amazon.com/images/M/MV5BNjk2ODQzNDYxNV5BMl5BanBnXkFtZTgwMTcyNDg4NjE@._V1_SX300.jpg,,https://www.imdb.com/title/tt0100405/
+Title,Year,Rating,Poster,Note,imdbID,Flag
+Pretty Woman,1990,7.1,https://m.media-amazon.com/images/M/MV5BNjk2ODQzNDYxNV5BMl5BanBnXkFtZTgwMTcyNDg4NjE@._V1_SX300.jpg,,https://www.imdb.com/title/tt0100405/,https://flagsapi.com/US/flat/64.png
+It,2017,7.3,https://m.media-amazon.com/images/M/MV5BZGZmOTZjNzUtOTE4OS00OGM3LWJiNGEtZjk4Yzg2M2Q1YzYxXkEyXkFqcGc@._V1_SX300.jpg,Cool horror!,https://www.imdb.com/title/tt1396484/,https://flagsapi.com/US/flat/64.png

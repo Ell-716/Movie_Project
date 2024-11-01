@@ -1,7 +1,5 @@
-Title,Year,Rating,Poster,Note,imdbID
-Home Alone,1990,7.7,https://m.media-amazon.com/images/M/MV5BNzNmNmQ2ZDEtMTc1MS00NjNiLThlMGUtZmQxNTg1Nzg5NWMzXkEyXkFqcGc@._V1_SX300.jpg,,https://www.imdb.com/title/tt0099785/
-Pretty Woman,1990,7.1,https://m.media-amazon.com/images/M/MV5BNjk2ODQzNDYxNV5BMl5BanBnXkFtZTgwMTcyNDg4NjE@._V1_SX300.jpg,My favorite movie!,https://www.imdb.com/title/tt0100405/
-Venom,2018,6.6,https://m.media-amazon.com/images/M/MV5BNTYwMDg5MDItNjhmZi00NmVmLThjNWItMmNkMjVkMWRhNzI2XkEyXkFqcGc@._V1_SX300.jpg,,https://www.imdb.com/title/tt1270797/
-American Pie,1999,7.0,https://m.media-amazon.com/images/M/MV5BMTg3ODY5ODI1NF5BMl5BanBnXkFtZTgwMTkxNTYxMTE@._V1_SX300.jpg,,https://www.imdb.com/title/tt0163651/
-Fight Club,1999,8.8,https://m.media-amazon.com/images/M/MV5BOTgyOGQ1NDItNGU3Ny00MjU3LTg2YWEtNmEyYjBiMjI1Y2M5XkEyXkFqcGc@._V1_SX300.jpg,,https://www.imdb.com/title/tt0137523/
-It,2017,7.3,https://m.media-amazon.com/images/M/MV5BZGZmOTZjNzUtOTE4OS00OGM3LWJiNGEtZjk4Yzg2M2Q1YzYxXkEyXkFqcGc@._V1_SX300.jpg,,https://www.imdb.com/title/tt1396484/
+Title,Year,Rating,Poster,Note,imdbID,Flag
+It,2017,7.3,https://m.media-amazon.com/images/M/MV5BZGZmOTZjNzUtOTE4OS00OGM3LWJiNGEtZjk4Yzg2M2Q1YzYxXkEyXkFqcGc@._V1_SX300.jpg,,https://www.imdb.com/title/tt1396484/,https://flagsapi.com/US/flat/64.png
+The Mask,1994,6.9,https://m.media-amazon.com/images/M/MV5BNGNmNjI0ZmMtMzI5MC00ZjUyLWFlZDEtYjUyMGZlN2E3N2E2XkEyXkFqcGc@._V1_SX300.jpg,,https://www.imdb.com/title/tt0110475/,https://flagsapi.com/US/flat/64.png
+Home Alone,1990,7.7,https://m.media-amazon.com/images/M/MV5BNzNmNmQ2ZDEtMTc1MS00NjNiLThlMGUtZmQxNTg1Nzg5NWMzXkEyXkFqcGc@._V1_SX300.jpg,,https://www.imdb.com/title/tt0099785/,https://flagsapi.com/US/flat/64.png
+American Pie,1999,7.0,https://m.media-amazon.com/images/M/MV5BMTg3ODY5ODI1NF5BMl5BanBnXkFtZTgwMTkxNTYxMTE@._V1_SX300.jpg,,https://www.imdb.com/title/tt0163651/,https://flagsapi.com/US/flat/64.png

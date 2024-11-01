@@ -16,14 +16,11 @@ def main():
     parser.add_argument('file', nargs='?')
     args = parser.parse_args()
 
-    # Assign file_path based on input or default
-    if args.file:
-        file_path = args.file
-    else:
-        file_path = os.path.join("data", "data.json")
+    file_path = args.file if args.file else os.path.join("data", "data.json")
+
+    if not args.file:
         print(Fore.RED + f"No valid filename provided. Proceeding with default file '{file_path}'.")
 
-    # Determine the storage type by file extension
     if file_path.endswith('.csv'):
         storage = StorageCsv(file_path)
     elif file_path.endswith('.json'):
@@ -34,15 +31,18 @@ def main():
         storage = StorageJson(file_path)
 
     if not os.path.exists(storage.file_path):
-        print(Fore.RED + f"File '{storage.file_path}' does not exist. "
-              f"A new file will be created.")
+        print(Fore.RED + f"File '{storage.file_path}' does not exist. A new file will be created.")
 
-        with open(file_path, 'w') as file:
-            if file_path.endswith('.json'):
-                file.write('{}')
-            elif file_path.endswith('.csv'):
-                file.write("Title,Year,Rating,Poster,Note,imdbID\n")
-            print(f"New file '{file_path}' has been created.")
+        try:
+            with open(file_path, 'w') as file:
+                if file_path.endswith('.json'):
+                    file.write('{}')
+                elif file_path.endswith('.csv'):
+                    file.write("Title,Year,Rating,Poster,Note,imdbID,Flag\n")
+            print(Fore.GREEN + f"New file '{file_path}' has been created.")
+        except Exception as e:
+            print(Fore.RED + f"Error creating file '{file_path}': {e}")
+            return
 
     movie_app = MovieApp(storage)
     movie_app.run()

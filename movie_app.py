@@ -87,6 +87,25 @@ class MovieApp:
                 print(Fore.RED + f"An unexpected error occurred: {err}")
                 return None
 
+    @staticmethod
+    def _fetch_country_mapping():
+        """
+        Fetches a mapping of country names to their ISO 3166-1 alpha-2 codes from an external API.
+        This method makes a request to the Rest Countries API to retrieve a list of all countries
+        along with their common names and ISO codes. The result is stored in a dictionary where
+        the keys are the country names and the values are the corresponding ISO codes.
+        Returns:
+            dict: A dictionary mapping country names (str) to their ISO codes (str).
+        """
+        response = requests.get("https://restcountries.com/v3.1/all")
+        countries = response.json()
+        country_code_mapping = {}
+        for country in countries:
+            name = country['name']['common']
+            code = country['cca2']
+            country_code_mapping[name] = code
+        return country_code_mapping
+
     def _is_movie_list_empty(self):
         """
         Checks if the movie list is empty and prints a message.
@@ -151,12 +170,13 @@ class MovieApp:
         """
         Adds a new movie to the storage if it doesn't already exist. Prompts the user to enter
         the movie name, and then saves the new movie to storage.
-        The movie data includes the title, year, rating, poster, and a link to its IMDb page.
+        The movie data includes the title, year, rating, poster, country, flag URL, and a link to its IMDb page.
         Returns:
             None
         """
         movie_name = self._valid_movie_name()
         data = self._fetch_movie_data(movie_name)
+        country_code_mapping = self._fetch_country_mapping()
 
         if data is None:
             return
@@ -174,12 +194,29 @@ class MovieApp:
         rating = float(imdb_rating) if imdb_rating != "N/A" else None
         poster = data.get("Poster")
         imdb_id = data.get("imdbID")
+        country_field = data.get("Country")
+
+        # Handle multiple countries by selecting the first one
+        if country_field:
+            primary_country = country_field.split(",")[0].strip()
+        else:
+            primary_country = None
 
         # Construct the IMDb link using the imdbID
         imdb_link = f"https://www.imdb.com/title/{imdb_id}/" if imdb_id else None
 
-        if title and year and rating and poster and imdb_link:
-            self._storage.add_movie(title, year, rating, poster, imdb_link)
+        # Check if the primary country exists in the mapping
+        if primary_country in country_code_mapping:
+            country_code = country_code_mapping[primary_country]
+            # Construct the flag URL
+            flag_url = f"https://flagsapi.com/{country_code}/flat/64.png"
+        else:
+            print(Fore.YELLOW + f"Country '{primary_country}' not found.")
+            flag_url = None
+
+        # Check all required details before adding the movie
+        if title and year and rating and poster and imdb_link and flag_url:
+            self._storage.add_movie(title, year, rating, poster, imdb_link, flag_url)
             print(Fore.GREEN + f"Movie '{title}' successfully added!")
             self._movies = self._storage.list_movies()
         else:
@@ -460,6 +497,7 @@ class MovieApp:
         for title, details in movies.items():
             note = details.get('Note', '')
             imdb_link = details.get('imdbID')
+            flag_url = details.get('Flag')
 
             movie_grid += f"""
                 <li>
@@ -478,6 +516,7 @@ class MovieApp:
                         </div>
                         <div class="movie-title">{title}</div>
                         <div class="movie-year">{details['Year']}</div>
+                        <img class="flag" src="{flag_url}" alt="Flag"/>
                         <div class="movie-note">{note}</div>                     
                     </div>
                 </li>

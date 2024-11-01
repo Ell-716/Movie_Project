@@ -29,7 +29,7 @@ class StorageCsv(IStorage):
             reader = csv.DictReader(file)
             for row in reader:
                 if isinstance(row, dict) and all(k in row for k in
-                                                 ['Title', 'Year', 'Rating', 'Poster', 'imdbID']):
+                                                 ['Title', 'Year', 'Rating', 'Poster', 'imdbID', 'Flag']):
                     title = row['Title']
                     try:
                         year = int(row['Year'])
@@ -37,13 +37,15 @@ class StorageCsv(IStorage):
                         poster = row['Poster']
                         note = row.get('Note', '')
                         imdb_link = row['imdbID']
+                        flag_url = row['Flag']
 
                         movies[title] = {
                             "Year": year,
                             "Rating": rating,
                             "Poster": poster,
                             "Note": note,
-                            "imdbID": imdb_link
+                            "imdbID": imdb_link,
+                            "Flag": flag_url
                         }
                     except ValueError as ve:
                         print(f"Error converting data for movie '{title}': {ve}")
@@ -56,7 +58,7 @@ class StorageCsv(IStorage):
             movies (dict): A dictionary of movies containing their details.
         """
         with open(self.file_path, mode="w", newline='', encoding='utf-8') as file:
-            writer = csv.DictWriter(file, fieldnames=["Title", "Year", "Rating", "Poster", "Note", "imdbID"])
+            writer = csv.DictWriter(file, fieldnames=["Title", "Year", "Rating", "Poster", "Note", "imdbID", "Flag"])
 
             writer.writeheader()
 
@@ -67,5 +69,6 @@ class StorageCsv(IStorage):
                     "Rating": details["Rating"],
                     "Poster": details["Poster"],
                     "Note": details.get("Note", ''),
-                    "imdbID": details.get("imdbID", '')
+                    "imdbID": details.get("imdbID", ''),
+                    "Flag": details.get("Flag")
                 })
