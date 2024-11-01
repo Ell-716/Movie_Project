@@ -471,7 +471,7 @@ class MovieApp:
                         </div>
                         <div class="movie-title">{title}</div>
                         <div class="movie-year">{details['Year']}</div>
-                        <div class='movie-note'>{note}</div>"    
+                        <div class='movie-note'>{note}</div>   
                     </div>
                 </li>
                 """
