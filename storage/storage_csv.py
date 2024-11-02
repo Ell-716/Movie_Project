@@ -37,7 +37,7 @@ class StorageCsv(IStorage):
                         poster = row['Poster']
                         note = row.get('Note', '')
                         imdb_link = row['imdbID']
-                        flag_url = row['Flag']
+                        flag_urls = row['Flag'].split(",") if row['Flag'] else []
 
                         movies[title] = {
                             "Year": year,
@@ -45,7 +45,7 @@ class StorageCsv(IStorage):
                             "Poster": poster,
                             "Note": note,
                             "imdbID": imdb_link,
-                            "Flag": flag_url
+                            "Flag": flag_urls
                         }
                     except ValueError as ve:
                         print(f"Error converting data for movie '{title}': {ve}")
@@ -63,6 +63,7 @@ class StorageCsv(IStorage):
             writer.writeheader()
 
             for title, details in movies.items():
+                flag_str = ",".join(details["Flag"]) if details.get("Flag") else ""
                 writer.writerow({
                     "Title": title,
                     "Year": details["Year"],
@@ -70,5 +71,5 @@ class StorageCsv(IStorage):
                     "Poster": details["Poster"],
                     "Note": details.get("Note", ''),
                     "imdbID": details.get("imdbID", ''),
-                    "Flag": details.get("Flag")
+                    "Flag": flag_str
                 })

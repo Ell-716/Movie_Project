@@ -41,7 +41,7 @@ class IStorage(ABC):
         """
         pass
 
-    def add_movie(self, title, year, rating, poster, imdb_link, flag_url):
+    def add_movie(self, title, year, rating, poster, imdb_link, flag_urls):
         """
         Add a new movie entry to storage.
         Args:
@@ -50,7 +50,7 @@ class IStorage(ABC):
             rating (float): The IMDb rating of the movie.
             poster (str): The URL of the movie's poster image.
             imdb_link (str): The URL link to the movie's page on IMDb.
-            flag_url (str): The URL of the movie's country flag image.
+            flag_urls (list): A list of URLs for the movie's country flag images.
         Returns:
             None
         """
@@ -61,7 +61,7 @@ class IStorage(ABC):
             "Rating": rating,
             "Poster": poster,
             "imdbID": imdb_link,
-            "Flag": flag_url
+            "Flag": flag_urls
         }
 
         self.save_movies(movies)

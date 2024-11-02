@@ -170,7 +170,7 @@ class MovieApp:
         """
         Adds a new movie to the storage if it doesn't already exist. Prompts the user to enter
         the movie name, and then saves the new movie to storage.
-        The movie data includes the title, year, rating, poster, country, flag URL, and a link to its IMDb page.
+        The movie data includes the title, year, rating, poster, country, flag URLs, and a link to its IMDb page.
         Returns:
             None
         """
@@ -196,28 +196,27 @@ class MovieApp:
         imdb_id = data.get("imdbID")
         country_field = data.get("Country")
 
-        # Handle multiple countries by selecting the first one
-        if country_field:
-            primary_country = country_field.split(",")[0].strip()
-        else:
-            primary_country = None
-
         # Construct the IMDb link using the imdbID
         imdb_link = f"https://www.imdb.com/title/{imdb_id}/" if imdb_id else None
 
-        # Check if the primary country exists in the mapping
-        if primary_country in country_code_mapping:
-            country_code = country_code_mapping[primary_country]
-            # Construct the flag URL
-            flag_url = f"https://flagsapi.com/{country_code}/flat/64.png"
-        else:
-            print(Fore.YELLOW + f"Country '{primary_country}' not found.")
-            flag_url = None
+        # Handle multiple countries by retrieving the first 2-3 countries
+        flag_urls = []
+        if country_field:
+            # Split the countries, strip extra spaces, and limit to a maximum of 3
+            countries = [country.strip() for country in country_field.split(",")[:3]]
 
-        # Check all required details before adding the movie
-        if title and year and rating and poster and imdb_link and flag_url:
-            self._storage.add_movie(title, year, rating, poster, imdb_link, flag_url)
-            print(Fore.GREEN + f"Movie '{title}' successfully added!")
+            for country in countries:
+                if country in country_code_mapping:
+                    country_code = country_code_mapping[country]
+                    flag_url = f"https://flagsapi.com/{country_code}/flat/64.png"
+                    flag_urls.append(flag_url)
+                else:
+                    print(Fore.YELLOW + f"Country '{country}' not found.")
+
+        # Verify that we have all necessary information before adding the movie
+        if title and year and rating and poster and imdb_link and flag_urls:
+            self._storage.add_movie(title, year, rating, poster, imdb_link, flag_urls)
+            print(Fore.GREEN + f"Movie '{title}' successfully added with flags!")
             self._movies = self._storage.list_movies()
         else:
             print(Fore.RED + "Some details are missing in the movie data. Please try another movie.")
@@ -491,14 +490,22 @@ class MovieApp:
             print(Fore.RED + "No movies match the filter criteria.")
 
     def _generate_website(self):
+        """
+        Generates an HTML webpage displaying the list of movies and saves it to an output file.
+        The webpage contains each movie's title, year, rating, poster, note, and associated flag images.
+        Flags for up to three countries are displayed if multiple countries are listed for a movie.
+        Returns:
+            None
+        """
         movies = self._storage.list_movies()
 
         movie_grid = ""
         for title, details in movies.items():
             note = details.get('Note', '')
             imdb_link = details.get('imdbID')
-            flag_url = details.get('Flag')
+            flag_urls = details.get('Flag', [])
 
+            # Build HTML for each movie's entry
             movie_grid += f"""
                 <li>
                     <div class="movie">
@@ -516,12 +523,15 @@ class MovieApp:
                         </div>
                         <div class="movie-title">{title}</div>
                         <div class="movie-year">{details['Year']}</div>
-                        <img class="flag" src="{flag_url}" alt="Flag"/>
-                        <div class="movie-note">{note}</div>                     
+                        <div class="flags">
+                            {"".join(f'<img class="flag" src="{url}" alt="Flag"/>' for url in flag_urls[:3])}
+                        </div>
+                        <div class="movie-note">{note}</div>
                     </div>
                 </li>
-                """
+            """
 
+        # Load the template and replace placeholders with content
         with open("_static/index_template.html", "r") as template_file:
             template_content = template_file.read()
 

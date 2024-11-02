@@ -4,14 +4,27 @@
         "Rating": 7.7,
         "Poster": "https://m.media-amazon.com/images/M/MV5BNzNmNmQ2ZDEtMTc1MS00NjNiLThlMGUtZmQxNTg1Nzg5NWMzXkEyXkFqcGc@._V1_SX300.jpg",
         "imdbID": "https://www.imdb.com/title/tt0099785/",
-        "Flag": "https://flagsapi.com/US/flat/64.png"
+        "Flag": [
+            "https://flagsapi.com/US/flat/64.png"
+        ]
+    },
+    "American Pie": {
+        "Year": 1999,
+        "Rating": 7.0,
+        "Poster": "https://m.media-amazon.com/images/M/MV5BMTg3ODY5ODI1NF5BMl5BanBnXkFtZTgwMTkxNTYxMTE@._V1_SX300.jpg",
+        "imdbID": "https://www.imdb.com/title/tt0163651/",
+        "Flag": [
+            "https://flagsapi.com/US/flat/64.png"
+        ]
     },
     "The Mask": {
         "Year": 1994,
         "Rating": 6.9,
         "Poster": "https://m.media-amazon.com/images/M/MV5BNGNmNjI0ZmMtMzI5MC00ZjUyLWFlZDEtYjUyMGZlN2E3N2E2XkEyXkFqcGc@._V1_SX300.jpg",
         "imdbID": "https://www.imdb.com/title/tt0110475/",
-        "Flag": "https://flagsapi.com/US/flat/64.png",
+        "Flag": [
+            "https://flagsapi.com/US/flat/64.png"
+        ],
         "Note": "Funny movie!"
     },
     "Pretty Woman": {
@@ -19,78 +32,157 @@
         "Rating": 7.1,
         "Poster": "https://m.media-amazon.com/images/M/MV5BNjk2ODQzNDYxNV5BMl5BanBnXkFtZTgwMTcyNDg4NjE@._V1_SX300.jpg",
         "imdbID": "https://www.imdb.com/title/tt0100405/",
-        "Flag": "https://flagsapi.com/US/flat/64.png",
-        "Note": "Romantic movie!"
-    },
-    "Forrest Gump": {
-        "Year": 1994,
-        "Rating": 8.8,
-        "Poster": "https://m.media-amazon.com/images/M/MV5BNDYwNzVjMTItZmU5YS00YjQ5LTljYjgtMjY2NDVmYWMyNWFmXkEyXkFqcGc@._V1_SX300.jpg",
-        "imdbID": "https://www.imdb.com/title/tt0109830/",
-        "Flag": "https://flagsapi.com/US/flat/64.png"
-    },
-    "Fight Club": {
-        "Year": 1999,
-        "Rating": 8.8,
-        "Poster": "https://m.media-amazon.com/images/M/MV5BOTgyOGQ1NDItNGU3Ny00MjU3LTg2YWEtNmEyYjBiMjI1Y2M5XkEyXkFqcGc@._V1_SX300.jpg",
-        "imdbID": "https://www.imdb.com/title/tt0137523/",
-        "Flag": "https://flagsapi.com/DE/flat/64.png"
-    },
-    "The Matrix": {
-        "Year": 1999,
-        "Rating": 8.7,
-        "Poster": "https://m.media-amazon.com/images/M/MV5BN2NmN2VhMTQtMDNiOS00NDlhLTliMjgtODE2ZTY0ODQyNDRhXkEyXkFqcGc@._V1_SX300.jpg",
-        "imdbID": "https://www.imdb.com/title/tt0133093/",
-        "Flag": "https://flagsapi.com/US/flat/64.png"
-    },
-    "The Godfather": {
-        "Year": 1972,
-        "Rating": 9.2,
-        "Poster": "https://m.media-amazon.com/images/M/MV5BYTJkNGQyZDgtZDQ0NC00MDM0LWEzZWQtYzUzZDEwMDljZWNjXkEyXkFqcGc@._V1_SX300.jpg",
-        "imdbID": "https://www.imdb.com/title/tt0068646/",
-        "Flag": "https://flagsapi.com/US/flat/64.png"
-    },
-    "Inception": {
-        "Year": 2010,
-        "Rating": 8.8,
-        "Poster": "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg",
-        "imdbID": "https://www.imdb.com/title/tt1375666/",
-        "Flag": "https://flagsapi.com/US/flat/64.png"
-    },
-    "Interstellar": {
-        "Year": 2014,
-        "Rating": 8.7,
-        "Poster": "https://m.media-amazon.com/images/M/MV5BYzdjMDAxZGItMjI2My00ODA1LTlkNzItOWFjMDU5ZDJlYWY3XkEyXkFqcGc@._V1_SX300.jpg",
-        "imdbID": "https://www.imdb.com/title/tt0816692/",
-        "Flag": "https://flagsapi.com/US/flat/64.png"
-    },
-    "It": {
-        "Year": 2017,
-        "Rating": 7.3,
-        "Poster": "https://m.media-amazon.com/images/M/MV5BZGZmOTZjNzUtOTE4OS00OGM3LWJiNGEtZjk4Yzg2M2Q1YzYxXkEyXkFqcGc@._V1_SX300.jpg",
-        "imdbID": "https://www.imdb.com/title/tt1396484/",
-        "Flag": "https://flagsapi.com/US/flat/64.png"
-    },
-    "Smile": {
-        "Year": 2022,
-        "Rating": 6.5,
-        "Poster": "https://m.media-amazon.com/images/M/MV5BNjFhMzBlNzktMjE2Ni00YTMyLWI2YWUtYmM1N2QxMDQwZmZhXkEyXkFqcGc@._V1_SX300.jpg",
-        "imdbID": "https://www.imdb.com/title/tt15474916/",
-        "Flag": "https://flagsapi.com/US/flat/64.png"
+        "Flag": [
+            "https://flagsapi.com/US/flat/64.png"
+        ],
+        "Note": "My favorite movie!"
     },
     "Venom": {
         "Year": 2018,
         "Rating": 6.6,
         "Poster": "https://m.media-amazon.com/images/M/MV5BNTYwMDg5MDItNjhmZi00NmVmLThjNWItMmNkMjVkMWRhNzI2XkEyXkFqcGc@._V1_SX300.jpg",
         "imdbID": "https://www.imdb.com/title/tt1270797/",
-        "Flag": "https://flagsapi.com/US/flat/64.png",
-        "Note": "Cool movie!"
+        "Flag": [
+            "https://flagsapi.com/US/flat/64.png",
+            "https://flagsapi.com/CN/flat/64.png"
+        ],
+        "Note": "This is just a note to test how it will look with a long text"
     },
-    "Hanna": {
+    "Harry Potter and the Deathly Hallows: Part 2": {
         "Year": 2011,
-        "Rating": 6.7,
-        "Poster": "https://m.media-amazon.com/images/M/MV5BNTAzMTg1NjY0NF5BMl5BanBnXkFtZTcwODc3MTgzNA@@._V1_SX300.jpg",
-        "imdbID": "https://www.imdb.com/title/tt0993842/",
-        "Flag": "https://flagsapi.com/US/flat/64.png"
+        "Rating": 8.1,
+        "Poster": "https://m.media-amazon.com/images/M/MV5BOTA1Mzc2N2ItZWRiNS00MjQzLTlmZDQtMjU0NmY1YWRkMGQ4XkEyXkFqcGc@._V1_SX300.jpg",
+        "imdbID": "https://www.imdb.com/title/tt1201607/",
+        "Flag": [
+            "https://flagsapi.com/GB/flat/64.png",
+            "https://flagsapi.com/US/flat/64.png"
+        ]
+    },
+    "The Matrix": {
+        "Year": 1999,
+        "Rating": 8.7,
+        "Poster": "https://m.media-amazon.com/images/M/MV5BN2NmN2VhMTQtMDNiOS00NDlhLTliMjgtODE2ZTY0ODQyNDRhXkEyXkFqcGc@._V1_SX300.jpg",
+        "imdbID": "https://www.imdb.com/title/tt0133093/",
+        "Flag": [
+            "https://flagsapi.com/US/flat/64.png",
+            "https://flagsapi.com/AU/flat/64.png"
+        ]
+    },
+    "The Godfather": {
+        "Year": 1972,
+        "Rating": 9.2,
+        "Poster": "https://m.media-amazon.com/images/M/MV5BYTJkNGQyZDgtZDQ0NC00MDM0LWEzZWQtYzUzZDEwMDljZWNjXkEyXkFqcGc@._V1_SX300.jpg",
+        "imdbID": "https://www.imdb.com/title/tt0068646/",
+        "Flag": [
+            "https://flagsapi.com/US/flat/64.png"
+        ]
+    },
+    "Forrest Gump": {
+        "Year": 1994,
+        "Rating": 8.8,
+        "Poster": "https://m.media-amazon.com/images/M/MV5BNDYwNzVjMTItZmU5YS00YjQ5LTljYjgtMjY2NDVmYWMyNWFmXkEyXkFqcGc@._V1_SX300.jpg",
+        "imdbID": "https://www.imdb.com/title/tt0109830/",
+        "Flag": [
+            "https://flagsapi.com/US/flat/64.png"
+        ]
+    },
+    "Inception": {
+        "Year": 2010,
+        "Rating": 8.8,
+        "Poster": "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg",
+        "imdbID": "https://www.imdb.com/title/tt1375666/",
+        "Flag": [
+            "https://flagsapi.com/US/flat/64.png",
+            "https://flagsapi.com/GB/flat/64.png"
+        ]
+    },
+    "Interstellar": {
+        "Year": 2014,
+        "Rating": 8.7,
+        "Poster": "https://m.media-amazon.com/images/M/MV5BYzdjMDAxZGItMjI2My00ODA1LTlkNzItOWFjMDU5ZDJlYWY3XkEyXkFqcGc@._V1_SX300.jpg",
+        "imdbID": "https://www.imdb.com/title/tt0816692/",
+        "Flag": [
+            "https://flagsapi.com/US/flat/64.png",
+            "https://flagsapi.com/GB/flat/64.png",
+            "https://flagsapi.com/CA/flat/64.png"
+        ]
+    },
+    "It": {
+        "Year": 2017,
+        "Rating": 7.3,
+        "Poster": "https://m.media-amazon.com/images/M/MV5BZGZmOTZjNzUtOTE4OS00OGM3LWJiNGEtZjk4Yzg2M2Q1YzYxXkEyXkFqcGc@._V1_SX300.jpg",
+        "imdbID": "https://www.imdb.com/title/tt1396484/",
+        "Flag": [
+            "https://flagsapi.com/US/flat/64.png",
+            "https://flagsapi.com/CA/flat/64.png"
+        ]
+    },
+    "Alien": {
+        "Year": 1979,
+        "Rating": 8.5,
+        "Poster": "https://m.media-amazon.com/images/M/MV5BN2NhMDk2MmEtZDQzOC00MmY5LThhYzAtMDdjZGFjOGZjMjdjXkEyXkFqcGc@._V1_SX300.jpg",
+        "imdbID": "https://www.imdb.com/title/tt0078748/",
+        "Flag": [
+            "https://flagsapi.com/GB/flat/64.png",
+            "https://flagsapi.com/US/flat/64.png"
+        ]
+    },
+    "Fight Club": {
+        "Year": 1999,
+        "Rating": 8.8,
+        "Poster": "https://m.media-amazon.com/images/M/MV5BOTgyOGQ1NDItNGU3Ny00MjU3LTg2YWEtNmEyYjBiMjI1Y2M5XkEyXkFqcGc@._V1_SX300.jpg",
+        "imdbID": "https://www.imdb.com/title/tt0137523/",
+        "Flag": [
+            "https://flagsapi.com/DE/flat/64.png",
+            "https://flagsapi.com/US/flat/64.png"
+        ]
+    },
+    "Smile": {
+        "Year": 2022,
+        "Rating": 6.5,
+        "Poster": "https://m.media-amazon.com/images/M/MV5BNjFhMzBlNzktMjE2Ni00YTMyLWI2YWUtYmM1N2QxMDQwZmZhXkEyXkFqcGc@._V1_SX300.jpg",
+        "imdbID": "https://www.imdb.com/title/tt15474916/",
+        "Flag": [
+            "https://flagsapi.com/US/flat/64.png"
+        ]
+    },
+    "Pulp Fiction": {
+        "Year": 1994,
+        "Rating": 8.9,
+        "Poster": "https://m.media-amazon.com/images/M/MV5BYTViYTE3ZGQtNDBlMC00ZTAyLTkyODMtZGRiZDg0MjA2YThkXkEyXkFqcGc@._V1_SX300.jpg",
+        "imdbID": "https://www.imdb.com/title/tt0110912/",
+        "Flag": [
+            "https://flagsapi.com/US/flat/64.png"
+        ]
+    },
+    "Django": {
+        "Year": 1966,
+        "Rating": 7.2,
+        "Poster": "https://m.media-amazon.com/images/M/MV5BMTQ2Zjc1NjYtZmNjNS00ZDM5LTk5ZDMtMGM1YTg4NzZhM2EwXkEyXkFqcGc@._V1_SX300.jpg",
+        "imdbID": "https://www.imdb.com/title/tt0060315/",
+        "Flag": [
+            "https://flagsapi.com/IT/flat/64.png",
+            "https://flagsapi.com/ES/flat/64.png"
+        ]
+    },
+    "Kill Bill: Vol. 1": {
+        "Year": 2003,
+        "Rating": 8.2,
+        "Poster": "https://m.media-amazon.com/images/M/MV5BZmMyYzJlZmYtY2I3NC00NjAyLTkyZWItZjdjZDI1YTYyYTEwXkEyXkFqcGc@._V1_SX300.jpg",
+        "imdbID": "https://www.imdb.com/title/tt0266697/",
+        "Flag": [
+            "https://flagsapi.com/US/flat/64.png",
+            "https://flagsapi.com/CN/flat/64.png"
+        ]
+    },
+    "Catch Me If You Can": {
+        "Year": 2002,
+        "Rating": 8.1,
+        "Poster": "https://m.media-amazon.com/images/M/MV5BMTY5MzYzNjc5NV5BMl5BanBnXkFtZTYwNTUyNTc2._V1_SX300.jpg",
+        "imdbID": "https://www.imdb.com/title/tt0264464/",
+        "Flag": [
+            "https://flagsapi.com/US/flat/64.png",
+            "https://flagsapi.com/CA/flat/64.png"
+        ]
     }
 }
