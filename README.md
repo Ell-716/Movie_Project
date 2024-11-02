@@ -2,7 +2,7 @@
 
 ## Overview
 
-**Movie_Project** is a simple yet powerful movie database application that allows users to manage their favorite movies. With this app, users can add, view, and store information about movies, including their titles, release years, ratings, and poster images. 
+**Movie_Project** is a simple yet powerful movie database application that allows users to manage their favorite movies. With this app, users can add, view, and store information about movies, including their titles, release years, ratings, poster images and country flags. 
 
 > *This project was developed as part of an assignment in the Software Engineer Bootcamp.* 🎓
 

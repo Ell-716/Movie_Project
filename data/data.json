@@ -6,7 +6,8 @@
         "imdbID": "https://www.imdb.com/title/tt0099785/",
         "Flag": [
             "https://flagsapi.com/US/flat/64.png"
-        ]
+        ],
+        "Note": "This is a note to test how it looks like with a long text!!!"
     },
     "American Pie": {
         "Year": 1999,
@@ -24,8 +25,7 @@
         "imdbID": "https://www.imdb.com/title/tt0110475/",
         "Flag": [
             "https://flagsapi.com/US/flat/64.png"
-        ],
-        "Note": "Funny movie!"
+        ]
     },
     "Pretty Woman": {
         "Year": 1990,
@@ -36,17 +36,6 @@
             "https://flagsapi.com/US/flat/64.png"
         ],
         "Note": "My favorite movie!"
-    },
-    "Venom": {
-        "Year": 2018,
-        "Rating": 6.6,
-        "Poster": "https://m.media-amazon.com/images/M/MV5BNTYwMDg5MDItNjhmZi00NmVmLThjNWItMmNkMjVkMWRhNzI2XkEyXkFqcGc@._V1_SX300.jpg",
-        "imdbID": "https://www.imdb.com/title/tt1270797/",
-        "Flag": [
-            "https://flagsapi.com/US/flat/64.png",
-            "https://flagsapi.com/CN/flat/64.png"
-        ],
-        "Note": "This is just a note to test how it will look with a long text"
     },
     "Harry Potter and the Deathly Hallows: Part 2": {
         "Year": 2011,
@@ -183,6 +172,27 @@
         "Flag": [
             "https://flagsapi.com/US/flat/64.png",
             "https://flagsapi.com/CA/flat/64.png"
+        ]
+    },
+    "Hangover": {
+        "Year": 1973,
+        "Rating": 4.2,
+        "Poster": "https://m.media-amazon.com/images/M/MV5BOWFlZTk5NDUtZmYxZS00N2ExLWE4YmItYTY3NzE0NTY3ZWM4XkEyXkFqcGdeQXVyMjUyNDk2ODc@._V1_SX300.jpg",
+        "imdbID": "https://www.imdb.com/title/tt0069764/",
+        "Flag": [
+            "https://flagsapi.com/SE/flat/64.png",
+            "https://flagsapi.com/GB/flat/64.png",
+            "https://flagsapi.com/FI/flat/64.png"
+        ]
+    },
+    "Venom": {
+        "Year": 2018,
+        "Rating": 6.6,
+        "Poster": "https://m.media-amazon.com/images/M/MV5BNTYwMDg5MDItNjhmZi00NmVmLThjNWItMmNkMjVkMWRhNzI2XkEyXkFqcGc@._V1_SX300.jpg",
+        "imdbID": "https://www.imdb.com/title/tt1270797/",
+        "Flag": [
+            "https://flagsapi.com/US/flat/64.png",
+            "https://flagsapi.com/CN/flat/64.png"
         ]
     }
 }

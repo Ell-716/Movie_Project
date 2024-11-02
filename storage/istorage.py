@@ -18,7 +18,7 @@ class IStorage(ABC):
         save_movies(movies): Saves a dictionary of movies to storage.
         add_movie(title, year, rating, poster): Adds a new movie to storage.
         delete_movie(title): Deletes a movie by title from storage.
-        update_movie(title, rating): Updates the rating of an existing movie.
+        update_movie(title, rating): Adds or removes notes.
     """
 
     @abstractmethod
@@ -27,7 +27,7 @@ class IStorage(ABC):
         Retrieve a dictionary of movies from the storage.
         Returns:
             dict: A dictionary where each key is a movie title, and each
-                  value is a dictionary of details (Year, Rating, Poster).
+                  value is a dictionary of details (Year, Rating, Poster etc.).
         """
         pass
 
@@ -37,7 +37,7 @@ class IStorage(ABC):
         Save the provided dictionary of movies to the storage.
         Args:
             movies (dict): A dictionary where each key is a movie title, and each
-                           value is a dictionary of movie details (Year, Rating, Poster).
+                           value is a dictionary of movie details (Year, Rating, Poster etc.).
         """
         pass
 
@@ -83,7 +83,6 @@ class IStorage(ABC):
     def update_movie(self, title, note=None):
         """
         Update or remove a note for an existing movie in storage.
-
         Args:
             title (str): The title of the movie to update.
             note (str or None): The note to add to the movie. If None or empty string, removes the note.

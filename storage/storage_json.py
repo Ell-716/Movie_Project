@@ -7,7 +7,7 @@ class StorageJson(IStorage):
     A storage handler class for managing movie data in a JSON file format.
     This class provides methods for loading, saving, and managing movie data, stored
     as a dictionary of dictionaries structure, where each movie title is a unique key,
-    and its value is a dictionary of details (Year, Rating, and Poster).
+    and its value is a dictionary of details (Year, Rating, Poster etc.).
     Attributes:
         file_path (str): The path to the JSON file where movie data is stored.
     Methods:
@@ -36,7 +36,7 @@ class StorageJson(IStorage):
                   or has an unexpected structure.
         """
         try:
-            with open(self.file_path, "r", encoding='utf-8') as file:
+            with open(self.file_path, 'r', encoding='utf-8') as file:
                 data = json.load(file)
                 if isinstance(data, dict):
                     return data
@@ -58,10 +58,10 @@ class StorageJson(IStorage):
         Saves the current state of movies to the JSON file.
         Args:
             movies (dict): A dictionary where each key is a movie title, and each value is a dictionary
-                           of movie details including 'Year', 'Rating', and 'Poster'.
+                           of movie details including 'Year', 'Rating', 'Poster' etc.
         """
         try:
-            with open(self.file_path, "w", encoding='utf-8') as file:
+            with open(self.file_path, 'w', encoding='utf-8') as file:
                 json.dump(movies, file, ensure_ascii=False, indent=4)
         except Exception as e:
             print(f"An error occurred while saving the movies: {e}")

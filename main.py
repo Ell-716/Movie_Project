@@ -16,7 +16,7 @@ def main():
     parser.add_argument('file', nargs='?')
     args = parser.parse_args()
 
-    file_path = args.file if args.file else os.path.join("data", "data.json")
+    file_path = args.file if args.file else os.path.join('data', 'data.json')
 
     if not args.file:
         print(Fore.RED + f"No valid filename provided. Proceeding with default file '{file_path}'.")
@@ -27,7 +27,7 @@ def main():
         storage = StorageJson(file_path)
     else:
         print(Fore.RED + f"Unsupported file type for '{file_path}'. Defaulting to JSON format.")
-        file_path = os.path.join("data", "data.json")
+        file_path = os.path.join('data', 'data.json')
         storage = StorageJson(file_path)
 
     if not os.path.exists(storage.file_path):
