@@ -3,7 +3,7 @@ import os
 import requests
 import random
 from dotenv import load_dotenv
-from requests.exceptions import HTTPError, ConnectionError, Timeout, RequestException
+from requests.exceptions import HTTPError, ConnectionError, Timeout
 from fuzzywuzzy import process
 from colorama import init, Fore
 
@@ -53,39 +53,36 @@ class MovieApp:
             try:
                 response = requests.get(api_url, headers=headers)
                 response.raise_for_status()  # Raise HTTPError for bad responses (4xx, 5xx)
-
-                data = response.json()
-                if "Error" in data:
-                    print(Fore.RED + f"Error fetching movie data: {data['Error']}")
-                    return None
-
-                # Check if the fetched title exactly matches the input title
-                fetched_title = data.get('Title', '').lower()
-                input_title = title.lower()
-
-                # If there's a partial match, confirm with the user
-                if fetched_title != input_title:
-                    print(Fore.YELLOW + f"Did you mean '{data['Title']}'? (y/n)")
-                    user_input = input().strip().lower()
-                    if user_input == 'y':
-                        return data
-                    else:
-                        print(Fore.YELLOW + "Please enter the full movie name or refine the title.")
-                        title = input("Enter movie name: ")
-                        api_url = f"http://www.omdbapi.com/?apikey={API_KEY}&t={title}"
-                        continue
-
-                return data
-
             except (HTTPError, ConnectionError, Timeout) as req_err:
                 print(Fore.RED + f"Request error occurred: {req_err}")
                 return None
+
+            try:
+                data = response.json()
             except ValueError as json_err:
                 print(Fore.RED + f"Error parsing JSON: {json_err}")
                 return None
-            except RequestException as err:
-                print(Fore.RED + f"An unexpected error occurred: {err}")
+
+            if "Error" in data:
+                print(Fore.RED + f"Error fetching movie data: {data['Error']}")
                 return None
+
+            # Check if the fetched title exactly matches the input title
+            fetched_title = data.get('Title', '').lower()
+            input_title = title.lower()
+
+            # If there's a partial match, confirm with the user
+            if fetched_title != input_title:
+                print(Fore.YELLOW + f"Did you mean '{data['Title']}'? (y/n)")
+                user_input = input().strip().lower()
+                if user_input == 'y':
+                    return data
+                print(Fore.YELLOW + "Please enter the full movie name or refine the title.")
+                title = input("Enter movie name: ")
+                api_url = f"http://www.omdbapi.com/?apikey={API_KEY}&t={title}"
+                continue
+
+            return data
 
     @staticmethod
     def _fetch_country_mapping():
@@ -97,13 +94,29 @@ class MovieApp:
         Returns:
             dict: A dictionary mapping country names (str) to their ISO codes (str).
         """
-        response = requests.get("https://restcountries.com/v3.1/all")
-        countries = response.json()
         country_code_mapping = {}
-        for country in countries:
-            name = country['name']['common']
-            code = country['cca2']
-            country_code_mapping[name] = code
+        url = "https://restcountries.com/v3.1/all"
+
+        try:
+            response = requests.get(url)
+            response.raise_for_status()  # Raises an HTTPError if the status code is 4xx or 5xx
+            countries = response.json()
+
+            # Process each country entry to build the mapping dictionary
+            for country in countries:
+                name = country.get('name', {}).get('common')
+                code = country.get('cca2')
+                if name and code:
+                    country_code_mapping[name] = code
+
+        except (requests.exceptions.HTTPError, requests.exceptions.ConnectionError,
+                requests.exceptions.Timeout) as req_err:
+            print(Fore.RED + f"Network error occurred while fetching country data: {req_err}")
+        except ValueError as json_err:
+            print(Fore.RED + f"Error parsing JSON data: {json_err}")
+        except requests.exceptions.RequestException as err:
+            print(Fore.RED + f"Unexpected error occurred: {err}")
+
         return country_code_mapping
 
     def _is_movie_list_empty(self):
@@ -135,7 +148,7 @@ class MovieApp:
             else:
                 return movie_name
 
-    def _command_list_movies(self):
+    def _print_list_movies(self):
         """
         Displays the total number of movies and a list of each movie
         with its year, rating and poster.
@@ -159,10 +172,11 @@ class MovieApp:
         """
         movie_name = self._valid_movie_name()
         data = self._fetch_movie_data(movie_name)
-        country_code_mapping = self._fetch_country_mapping()
 
         if data is None:
             return
+
+        country_code_mapping = self._fetch_country_mapping()
 
         # Normalize movie title
         existing_titles = {title.strip().lower() for title in self._movies.keys()}
@@ -221,6 +235,12 @@ class MovieApp:
                 self._storage.delete_movie(original_name)
                 print(Fore.GREEN + f"Movie '{original_name}' successfully deleted.")
                 self._movies = self._storage.list_movies()
+            except KeyError:
+                print(Fore.RED + f"Movie '{original_name}' could not be found in storage for deletion.")
+            except ValueError:
+                print(Fore.RED + f"Invalid data provided for deleting movie '{original_name}'.")
+            except IOError as io_err:
+                print(Fore.RED + f"Input/output error occurred while trying to delete movie '{original_name}': {io_err}.")
             except Exception as e:
                 print(Fore.RED + f"Failed to delete movie '{original_name}': {e}")
         else:
@@ -251,7 +271,7 @@ class MovieApp:
                 else:
                     print(Fore.GREEN + f"The note for movie '{original_name}' removed or not added.")
                 self._movies = self._storage.list_movies()
-            except Exception as e:
+            except (IOError, ValueError) as e:
                 print(Fore.RED + f"Failed to update movie '{original_name}': {e}")
         else:
             print(Fore.RED + f"Movie '{movie_to_update}' doesn't exist!")
@@ -271,6 +291,10 @@ class MovieApp:
             return
 
         ratings = [details['Rating'] for details in self._movies.values()]
+
+        if not ratings:
+            print("No valid ratings available to calculate statistics.")
+            return
 
         # Calculate and display average rating
         average = sum(ratings) / len(ratings)
@@ -299,7 +323,8 @@ class MovieApp:
         Returns:
             None
         """
-        movies_with_rating = [movie for movie, details in self._movies.items() if details['Rating'] == rating]
+        movies_with_rating = [movie for movie, details in self._movies.items()
+                              if details['Rating'] == rating]
         for movie in movies_with_rating:
             print(f"{descriptor} movie: {movie}: {self._movies[movie]['Rating']}")
 
@@ -378,21 +403,17 @@ class MovieApp:
                 # Sort movies by year, latest movies first
                 latest_first = sorted(self._movies.items(), key=lambda item: item[1]['Year'], reverse=True)
                 for movie, details in latest_first:
-                    print(
-                        f"{movie} ({details['Year']}): {details['Rating']:.1f}")
+                    print(f"{movie} ({details['Year']}): {details['Rating']:.1f}")
                 break
 
-            elif latest_movies == "n":
+            if latest_movies == "n":
                 # Sort movies by year, oldest movies first
                 latest_last = sorted(self._movies.items(), key=lambda item: item[1]['Year'])
                 for movie, details in latest_last:
-                    print(
-                        f"{movie} ({details['Year']}): {details['Rating']:.1f}")
+                    print(f"{movie} ({details['Year']}): {details['Rating']:.1f}")
                 break
-
-            else:
-                print("Please enter 'Y' or 'N'")
-                continue
+            print("Please enter 'Y' or 'N'")
+            continue
 
     def _filter_movies(self):
         """
@@ -566,7 +587,7 @@ class MovieApp:
     # Define the menu options and corresponding functions
     menu = {
         0: ("Exit", None),
-        1: ("List movies", _command_list_movies),
+        1: ("List movies", _print_list_movies),
         2: ("Add movie", _command_add),
         3: ("Delete movie", _command_delete),
         4: ("Update movie", _command_update),
