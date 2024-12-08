@@ -427,47 +427,53 @@ class MovieApp:
         # Prompt user for minimum rating (allow blank input)
         while True:
             min_rating = input("Enter minimum rating (leave blank for no minimum rating): ")
-            if min_rating == "":
+            if not min_rating:
                 min_rating = None
                 break
+
             try:
                 min_rating = float(min_rating)
+            except ValueError:
+                print(Fore.RED + "Invalid input. Please enter a valid rating.")
+
                 if 0 <= min_rating <= 10:
                     break
                 else:
                     print(Fore.RED + "Please enter a rating between 0 and 10.")
-            except ValueError:
-                print(Fore.RED + "Invalid input. Please enter a valid rating.")
 
         # Prompt user for start year (allow blank input)
         while True:
             start_year = input("Enter start year (leave blank for no start year): ")
-            if start_year == "":
+            if not start_year:
                 start_year = None
                 break
+
             try:
                 start_year = int(start_year)
+            except ValueError:
+                print(Fore.RED + "Invalid input. Please enter a valid year.")
+
                 if 1888 <= start_year <= 2024:
                     break
                 else:
                     print(Fore.RED + "Please enter a year between 1888 and 2024.")
-            except ValueError:
-                print(Fore.RED + "Invalid input. Please enter a valid year.")
 
         # Prompt user for end year (allow blank input)
         while True:
             end_year = input("Enter end year (leave blank for no end year): \n")
-            if end_year == "":
+            if not end_year:
                 end_year = None
                 break
+
             try:
                 end_year = int(end_year)
+            except ValueError:
+                print(Fore.RED + "Invalid input. Please enter a valid year.")
+
                 if 1888 <= end_year <= 2024:
                     break
                 else:
                     print(Fore.RED + "Please enter a year between 1888 and 2024.")
-            except ValueError:
-                print(Fore.RED + "Invalid input. Please enter a valid year.")
 
         # Apply the filtering logic
         filtered_movies = []
@@ -476,9 +482,9 @@ class MovieApp:
             rating = details['Rating']
 
             # Filter based on user inputs
-            if (min_rating is None or rating >= min_rating) and \
-                    (start_year is None or year >= start_year) and \
-                    (end_year is None or year <= end_year):
+            if (not min_rating or rating >= min_rating) and \
+                    (not start_year or year >= start_year) and \
+                    (not end_year or year <= end_year):
                 filtered_movies.append((movie, year, rating))
 
         # Display the filtered movies
@@ -531,13 +537,13 @@ class MovieApp:
             """
 
         # Load the template and replace placeholders with content
-        with open("_static/index_template.html", "r") as template_file:
+        with open("_static/index_template.html", "r", encoding="utf-8") as template_file:
             template_content = template_file.read()
 
         final_html = template_content.replace("__TEMPLATE_TITLE__", "🎬 My Movie App")
         final_html = final_html.replace("__TEMPLATE_MOVIE_GRID__", movie_grid)
 
-        with open("_static/index.html", "w") as output_file:
+        with open("_static/index.html", "w", encoding="utf-8") as output_file:
             output_file.write(final_html)
 
         print(Fore.GREEN + "Website was generated successfully.")

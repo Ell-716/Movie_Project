@@ -224,5 +224,15 @@
             "https://flagsapi.com/US/flat/64.png",
             "https://flagsapi.com/CN/flat/64.png"
         ]
+    },
+    "I, Robot": {
+        "Year": 2004,
+        "Rating": 7.1,
+        "Poster": "https://m.media-amazon.com/images/M/MV5BZDdhNTY3YTgtYmQwMC00MjM1LTgzYzMtMGM1N2E0NWM1NDlkXkEyXkFqcGc@._V1_SX300.jpg",
+        "imdbID": "https://www.imdb.com/title/tt0343818/",
+        "Flag": [
+            "https://flagsapi.com/US/flat/64.png",
+            "https://flagsapi.com/DE/flat/64.png"
+        ]
     }
 }
