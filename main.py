@@ -34,7 +34,7 @@ def main():
         print(Fore.RED + f"File '{storage.file_path}' does not exist. A new file will be created.")
 
         try:
-            with open(file_path, 'w') as file:
+            with open(file_path, 'w', encoding='utf-8') as file:
                 if file_path.endswith('.json'):
                     file.write('{}')
                 elif file_path.endswith('.csv'):
